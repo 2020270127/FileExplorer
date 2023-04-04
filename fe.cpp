@@ -1,7 +1,7 @@
 #include "include/argparse.hpp"
-#include <filesystem>
 #include <stdio.h>
 #include <stdlib.h>
+#include <filesystem>
 
 #define BUF_SIZE 4096
 using namespace std;
@@ -21,13 +21,24 @@ int main(int argc, char *argv[]) {
 
     program.parse_args(argc, argv);
 
-    if(program.is_used("-rm")){
+    if (program.is_used("-rm")) {
 
+    } 
+    else if (program.is_used("-dir")) {
+        cout << program.get<string>("-dir");
     }
-    else if(program.is_used("-dir")){
-        printf("%s", program.get<string>("-dir"));
+    else if (program.is_used("-mkdir")) {
+        cout << program.get<string>("-dir");
     }
-
+    else if (program.is_used("-cp")) {
+        cout << program.get<string>("-dir");
+    }
+    else if (program.is_used("-sort")) {
+        cout << program.get<string>("-dir");
+    }
+    else if (program.is_used("-ss")) {
+        cout << program.get<string>("-dir");
+    }
 
     exit(0);
 }
