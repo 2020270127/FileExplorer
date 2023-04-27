@@ -29,22 +29,35 @@ int main(int argc, char *argv[]) {
   }
 
     if (program.is_used("-rm")) {
-            cout << "-rm used";
-    } 
+    std::string path_to_remove = program.get<string>("-rm");
+
+    try {
+        if (std::filesystem::exists(path_to_remove)) {
+            std::filesystem::remove_all(path_to_remove);
+        } else {
+            std::cerr << "Path not found: " << path_to_remove << std::endl;
+            return 1;
+        }
+    } catch (const std::exception& ex) {
+        std::cerr << "Error removing path: " << path_to_remove << ", error: " << ex.what() << std::endl;
+        return 1;
+    }
+}
+    
     else if (program.is_used("-dir")) {
         cout << program.get<string>("-dir");
     }
     else if (program.is_used("-mkdir")) {
-        cout << program.get<string>("-dir");
+        //mkdir
     }
     else if (program.is_used("-cp")) {
-        cout << program.get<string>("-dir");
+        //cp
     }
     else if (program.is_used("-sort")) {
-        cout << program.get<string>("-dir");
+        //sort
     }
     else if (program.is_used("-ss")) {
-        cout << program.get<string>("-dir");
+        //ss
     }
 
     exit(0);
