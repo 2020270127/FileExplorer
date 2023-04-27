@@ -11,18 +11,25 @@ int main(int argc, char *argv[]) {
 
     // Args list
     program.add_argument("-dir").default_value("./").help("target dir");
-    program.add_argument("-mkdir").help("make dir");
-    program.add_argument("-rm").help("remove file or dir");
-    program.add_argument("-touch").help("touch");
-    program.add_argument("-cp").help("copy src to dst");
-    program.add_argument("-mv").help("move and");
-    program.add_argument("-sort").help("sort list [algorithm]");
-    program.add_argument("-ss").help("search by substring");
+    program.add_argument("-mkdir").help("make dir"); //폴더 생성
+    program.add_argument("-rm").help("remove file or dir"); //파일 혹은 폴더 삭제 
+    program.add_argument("-touch").help("touch"); //파일 생성
+    program.add_argument("-cp").help("copy src to dst"); //파일 혹은 폴더 복사
+    program.add_argument("-mv").help("move and"); //이동
+    program.add_argument("-sort").help("sort list [algorithm]"); //정렬
+    program.add_argument("-ss").help("search by substring"); //검색
 
+
+  try {
     program.parse_args(argc, argv);
+  } catch (const std::runtime_error &err) {
+    std::cerr << err.what() << std::endl;
+    std::cerr << program;
+    return 1;
+  }
 
     if (program.is_used("-rm")) {
-
+            cout << "-rm used";
     } 
     else if (program.is_used("-dir")) {
         cout << program.get<string>("-dir");
