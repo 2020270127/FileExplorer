@@ -1,6 +1,8 @@
 #include "include/argparse.hpp"
 #include <stdio.h>
 #include <stdlib.h>
+#include <fstream>
+#include <iostream>
 #include <filesystem>
 
 #define BUF_SIZE 4096
@@ -25,10 +27,9 @@ int main(int argc, char *argv[]) {
   } catch (const std::runtime_error &err) {
     std::cerr << err.what() << std::endl;
     std::cerr << program;
-    return 1;
   }
 
-    if (program.is_used("-rm")) {
+    if (program.is_used("-rm")) {  //파일 삭제기능, 강제 삭제 디폴트
     std::string path_to_remove = program.get<string>("-rm");
 
     try {
@@ -36,26 +37,52 @@ int main(int argc, char *argv[]) {
             std::filesystem::remove_all(path_to_remove);
         } else {
             std::cerr << "Path not found: " << path_to_remove << std::endl;
-            return 1;
         }
     } catch (const std::exception& ex) {
         std::cerr << "Error removing path: " << path_to_remove << ", error: " << ex.what() << std::endl;
-        return 1;
     }
 }
     
-    else if (program.is_used("-dir")) {
+    else if (program.is_used("-dir")) { //현재 경로 출력
         cout << program.get<string>("-dir");
     }
-    else if (program.is_used("-mkdir")) {
-        //mkdir
+
+    else if (program.is_used("-mkdir")) { // 폴더 생성
+    std::string path_to_create = program.get<string>("-mkdir");
+    try {
+        if (std::filesystem::create_directory(path_to_create)) {
+            std::cout << "Directory created: " << path_to_create << std::endl;
+        } else {
+            std::cerr << "Directory already exists: " << path_to_create << std::endl;
+        }
+    } catch (const std::exception& ex) {
+        std::cerr << "Error creating directory: " << path_to_create << ", error: " << ex.what() << std::endl;
+      }
+
     }
+    else if (program.is_used("-touch")) { //파일 생성
+    std::string file_path = program.get<string>("-touch");
+    try {
+        std::ofstream file(file_path);
+        if (file.is_open()) {
+            file.close();
+            std::cout << "File created: " << file_path << std::endl;
+        } else {
+            std::cerr << "Error creating file: " << file_path << std::endl;
+        }
+    } catch (const std::exception& ex) {
+        std::cerr << "Error creating file: " << file_path << ", error: " << ex.what() << std::endl;
+    }
+    }
+
     else if (program.is_used("-cp")) {
         //cp
     }
+
     else if (program.is_used("-sort")) {
         //sort
     }
+    
     else if (program.is_used("-ss")) {
         //ss
     }
