@@ -9,7 +9,6 @@ template <typename T> void swap(T *a, T *b) {
     b = tmp;
 }
 
-template <typename T> void quick_sort(T *arr, int left, int right) { return; }
 
 int strstr(char str[], char key[]) {
     // str에서 key 패턴을 탐색함. 슬라이딩 윈도우 알고리즘 이용
