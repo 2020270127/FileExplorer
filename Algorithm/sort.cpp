@@ -16,7 +16,7 @@ int strcmp(string a, string b) {
     // 문자열 모두 같은 경우 짧은게 우선
     if (alen < blen)
         return 1;
-    else if (blen < alen)
+    else if (blen > alen)
         return 0;
     else
         return -1; // 같은 문자열인 경우 다른 속성 비교
@@ -34,29 +34,29 @@ void quick_sort(T *arr, int left, int right, bool (*cptr)(T, T)) {
     return;
 }
 
-
-template <typename T>
-bool comp(T a, T b){
-    if(a > b)
+template <typename T> bool comp(T a, T b) {
+    if (a > b)
         return 1;
-    else if(b < a)
+    else if (b < a)
         return 0;
-    else return 0;    
+    else
+        return 0;
 }
 
-
-template <typename T, typename CmpFunc =  T (*)(T, T)>
+template <typename T, typename CmpFunc = T (*)(T, T)>
 void heapify(T array[], int heapsize, int i, CmpFunc cmp) {
     int parentNode = i;
     int leftChildNode = i * 2 + 1;
     int rightChildNode = i * 2 + 2;
 
     // 왼쪽 자식 노드가 존재하면서 부모노드와 값 비교.
-    if ( cmp (heapsize, leftChildNode) && cmp(array[leftChildNode], array[parentNode])) {
+    if (heapsize > leftChildNode &&
+        cmp(array[leftChildNode], array[parentNode])) {
         parentNode = leftChildNode;
     }
     // 오른쪽 자식 노드가 존재하면서 부모노드와 값 비교.
-    if (cmp (heapsize, rightChildNode) && cmp(array[rightChildNode], array[parentNode])) {
+    if (heapsize > rightChildNode &&
+        cmp(array[rightChildNode], array[parentNode])) {
         parentNode = rightChildNode;
     }
 
@@ -68,17 +68,17 @@ void heapify(T array[], int heapsize, int i, CmpFunc cmp) {
     }
 }
 
-template <typename T, typename CmpFunc =  T (*)(T, T)>
+template <typename T, typename CmpFunc = T (*)(T, T)>
 void heap_sort(T *arr, int size, CmpFunc cmp) {
     // 제자리 정렬(추가 메모리 필요x), O(nlogn) 불안정 정렬
     // 배열 max heapify
     for (int i = (size - 1) / 2; i >= 0; i--) {
-        heapify(arr, size, i, cmp); // 밑에 있는 부모노드부터 heapify
+        heapify(arr, size - 1, i, cmp); // 밑에 있는 부모노드부터 heapify
     }
     // heap sort
     for (int i = size - 1; i > 0; i--) { // max heap을 size - 1번 뒤로 보내기
-        swap(&arr[i], &arr[0]); // max heap을 배열뒤로 보낸다.
-        heapify(arr, i , 0, cmp);
+        swap(&arr[i], &arr[0]);          // max heap을 배열뒤로 보낸다.
+        heapify(arr, i, 0, cmp);
     }
     return;
 }
@@ -86,13 +86,23 @@ void heap_sort(T *arr, int size, CmpFunc cmp) {
 template <typename T> void merge_sort(T *arr, int left, int right) { return; }
 
 int main() { // 테스트용
-    int arr[] = {5, 3, 4, 2, 1, 0,67, 987, 3, 5};
+    int arr[] = {5, 3, 4, 2, 1, 0, 67, 987, 3, 5};
+    string astr[] = {"hello", "hi", "hiru", "hired"};
     for (auto i : arr) {
         cout << i << " ";
     }
     cout << "\n";
-    heap_sort(arr, 6, comp<int>);
+    heap_sort(arr, 10, comp<int>);
     for (auto i : arr) {
+        cout << i << " ";
+    }
+    cout << "\n";
+    for (auto i : astr) {
+        cout << i << " ";
+    }
+    cout << "\n";
+    heap_sort(astr, 4, strcmp);
+    for (auto i : astr) {
         cout << i << " ";
     }
 }
