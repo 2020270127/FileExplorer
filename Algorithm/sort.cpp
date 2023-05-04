@@ -14,9 +14,9 @@ int strcmp(string a, string b) {
             return 0;
     }
     // 문자열 모두 같은 경우 짧은게 우선
-    if (alen < blen)
+    if (alen > blen)
         return 1;
-    else if (blen > alen)
+    else if (alen < blen)
         return 0;
     else
         return -1; // 같은 문자열인 경우 다른 속성 비교
@@ -87,7 +87,7 @@ template <typename T> void merge_sort(T *arr, int left, int right) { return; }
 
 int main() { // 테스트용
     int arr[] = {5, 3, 4, 2, 1, 0, 67, 987, 3, 5};
-    string astr[] = {"hello", "hi", "hiru", "hired"};
+    string astr[] = {"hello", "hi", "hiru", "hired", "apple", "banana"};
     for (auto i : arr) {
         cout << i << " ";
     }
@@ -101,7 +101,7 @@ int main() { // 테스트용
         cout << i << " ";
     }
     cout << "\n";
-    heap_sort(astr, 4, strcmp);
+    heap_sort(astr, 6, strcmp);
     for (auto i : astr) {
         cout << i << " ";
     }
