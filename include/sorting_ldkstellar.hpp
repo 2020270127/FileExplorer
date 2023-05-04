@@ -6,7 +6,7 @@ using namespace std;
 template <typename T>
 void quicksort(T **data ,int col ,int start, int end){// 파라미터 설명 data는 더블포인터 변수,행번호 , 행번호 파라미터의 시작 인덱스 , 열번호 파라미터의 마지막 인덱스 
    if(start >= end){
-    //원소가 1개인 경우
+    //원소가 1개인 
         return ; 
     }
     int pivot = start;
