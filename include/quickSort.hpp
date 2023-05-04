@@ -50,7 +50,7 @@ void quicksort(FileInfo* arr, int left, int right, char standard) {
         }
         break;
 
-        case 'n':
+        case 'n': //name
             if (left < right) {
             int i = left, j = right;
             FileInfo tmp;
@@ -76,7 +76,7 @@ void quicksort(FileInfo* arr, int left, int right, char standard) {
         }
         break;
 
-        case 't':
+        case 't': //modified_time
             if (left < right) {
             int i = left, j = right;
             FileInfo tmp;
