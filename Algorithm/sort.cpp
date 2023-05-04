@@ -28,18 +28,37 @@ template <typename T> void swap(T *a, T *b) {
     *b = tmp;
 }
 
-template <typename T>
-void quick_sort(T *arr, int left, int right, bool (*cptr)(T, T)) {
+template <typename T, typename CmpFunc = T (*)(T, T)>
+void quick_sort(T array[], int left, int right, CmpFunc cmp) {
+    if (left < right) {
+            int i = left, j = right;
+            T tmp;
+            T pivot = array[(left + right) / 2];
 
-    return;
+            while (i <= j) {
+                while (cmp(pivot,array[i]))//
+                    i++;
+                while (cmp(array[j],pivot))
+                    j--;
+                if (i <= j) {
+                    tmp = array[i];
+                    array[i] = array[j];
+                    array[j] = tmp;
+                    i++;
+                    j--;
+                }
+            }
+            if (left < j)
+                quick_sort(array, left, j, cmp);
+            if (i < right)
+                quick_sort(array, i, right, cmp);
+        }
 }
 
 template <typename T> bool comp(T a, T b) {
     if (a > b)
         return 1;
-    else if (b < a)
-        return 0;
-    else
+    else 
         return 0;
 }
 
@@ -68,6 +87,7 @@ void heapify(T array[], int heapsize, int i, CmpFunc cmp) {
     }
 }
 
+
 template <typename T, typename CmpFunc = T (*)(T, T)>
 void heap_sort(T *arr, int size, CmpFunc cmp) {
     // 제자리 정렬(추가 메모리 필요x), O(nlogn) 불안정 정렬
@@ -92,7 +112,7 @@ int main() { // 테스트용
         cout << i << " ";
     }
     cout << "\n";
-    heap_sort(arr, 10, comp<int>);
+    quick_sort(arr, 0, 9, comp<int>);
     for (auto i : arr) {
         cout << i << " ";
     }
