@@ -14,7 +14,7 @@ void quicksort(T **data ,int col ,int start, int end){// 파라미터 설명 dat
     // 왼쪽 출발 지점 
     int j = end; 
     // 오른쪽 출발 지점
-    char* temp;
+    T* temp;
     
     while(i <= j){
         // 포인터가 엇갈릴때까지 반복
