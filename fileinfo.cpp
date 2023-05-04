@@ -1,18 +1,8 @@
-#include <iostream>
-#include <filesystem>
-#include <string>
-#include <sys/stat.h>
-#include <ctime>
+#include "include/quickSort.hpp"
 using namespace std;
 namespace fs = std::filesystem;
 
-struct FileInfo {
-    string name;
-    string path;
-    uintmax_t size;
-    bool is_directory;
-    std::time_t modified_time;
-};
+
 
 template <typename T>
 void printInfo(T *info_array, int size) {
@@ -54,20 +44,23 @@ FileInfo* getInfo() {
             info_array[i].is_directory = entry.is_directory();
             i++;
         }
-    }
-
-
-    //**deleting array**
-
-    // for (int i = 0; i < file_count; i++) {
-    //     delete info_array[i];
-    // }
-    // delete[] info_array; 
+    } 
     return info_array;
-
 }
+
 int main(){
-    FileInfo* arr = getInfo();
-    int array_size = getSize();
-    printInfo(arr, array_size);
+    FileInfo* info_array = getInfo();
+    int file_count = getSize();
+    // quicksort(info_array, 0, file_count - 1,'t'); //시간순 정렬
+    // printInfo(info_array, file_count);
+    
+    // quicksort(info_array, 0, file_count - 1,'n'); //이름순 정렬
+    // printInfo(info_array, file_count);
+
+    quicksort(info_array, 0, file_count - 1,'s'); //크기순 정렬
+    printInfo(info_array, file_count);
+
+    delete[] info_array; //할당 해제
+
+    //deleteArray(info_array,file_count);
 }
