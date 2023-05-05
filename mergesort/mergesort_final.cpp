@@ -78,6 +78,6 @@ int main() {
     for (int i = 0; i < 3; i++) {
         cout << arr[i].a << ", " << arr[i].b << endl;
     }
-
+    
     return 0;
 }
