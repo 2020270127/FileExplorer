@@ -3,29 +3,23 @@
 
 using namespace std;
 
-//파일정보 구조체 들어갈 자리
-struct Fruit {
+struct Data {
     int a;
     string b;
+    int size;
 };
 
-//파일정보 중 어떤 걸 기준으로 할 지 정하는 코드
-bool compareA(const Fruit &f1, const Fruit &f2) {
-    return f1.a < f2.a;
+bool cmp(const Data &d1, const Data &d2) {  //정렬기준을 구조체의 멤버 중 어느걸로 할 지 정하는 코드
+    return d1.b < d2.b;     //테스트에서는 멤버 b를 기준으로 정렬
 }
 
-bool compareB(const Fruit &f1, const Fruit &f2) {
-    return f1.b < f2.b;
-}
-
-//병합 정렬 구현
 template <typename T>
-void merge(T *arr, int left, int mid, int right, bool (*compare)(const T&, const T&)) {
+void merge(T *arr, int left, int mid, int right) {
     int i = left, j = mid + 1, k = 0;
     T tmp[right - left + 1];
 
     while (i <= mid && j <= right) {
-        if (compare(arr[i], arr[j])) {
+        if (cmp(arr[i], arr[j])) {
             tmp[k++] = arr[i++];
         } else {
             tmp[k++] = arr[j++];
@@ -44,40 +38,36 @@ void merge(T *arr, int left, int mid, int right, bool (*compare)(const T&, const
 }
 
 template <typename T>
-void merge_sort(T *arr, int left, int right, bool (*compare)(const T&, const T&)) {
-    if (left >= right) {//배열의 원소가 1개이면 함수종료
-        return;
-    }
+void merge_sort(T *arr, int left, int right) {   //병합함수 구현 파트
+    
     int mid = (left + right) / 2;
-    merge_sort(arr, left, mid, compare);
-    merge_sort(arr, mid + 1, right, compare);
-    merge(arr, left, mid, right, compare);
+    
+    if (left < right)  //배열의 원소가 1개이면 재귀함수종료
+    {
+        int mid = (left + right) / 2;
+        merge_sort(arr, left, mid); // 왼쪽 배열의 원소가 1개 될 때까지 나누는 작업
+        merge_sort(arr, mid + 1, right); // 오른쪽 배열
+        merge(arr, left, mid, right); // 왼쪽 배열과 오른쪽 배열 비교후 병합하는 작업
+    }
 }
 
-//TEST용 코드
+// 테스트용 코드
 int main() {
-    Fruit arr[3];
-    arr[0].a = 10;
-    arr[0].b = "apple";
-    arr[1].a = 5;
-    arr[1].b = "banana";
-    arr[2].a = 3;
-    arr[2].b = "orange";
+    Data arr[] = {
+        {10, "apple", 5},
+        {7, "banana", 3},
+        {15, "orange", 8},
+        {3, "grape", 2},
+        {22, "pear", 6}
+    };
 
-    cout << "sort by memebe of a"<<endl;
-    merge_sort(arr, 0, 2, compareA);
+    int n = sizeof(arr) / sizeof(Data); //배열의 크기
 
-    for (int i = 0; i < 3; i++) {
-        cout << arr[i].a << ", " << arr[i].b << endl;
+    merge_sort(arr, 0, n - 1);
+
+    for (int i = 0; i < n; i++) {
+        cout << arr[i].a << " " << arr[i].b << " " << arr[i].size << endl;
     }
-    cout <<"\n";
 
-    cout << "sort by member of b"<<endl;
-    merge_sort(arr, 0, 2, compareB);
-
-    for (int i = 0; i < 3; i++) {
-        cout << arr[i].a << ", " << arr[i].b << endl;
-    }
-    
     return 0;
 }
