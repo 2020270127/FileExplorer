@@ -3,7 +3,7 @@
 
 using namespace std;
 
-struct Data {
+struct Data { // 테스트용 구조체
     int a;
     string b;
     int size;
