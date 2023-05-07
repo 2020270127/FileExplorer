@@ -132,8 +132,8 @@ int main(int argc, char *argv[]) {
 
     namespace fs = std::filesystem;
 
-    std::string file_name = program.get<std::vector<string>>("-cp")[0];
-    std::string destination_path = program.get<std::vector<string>>("-cp")[1];
+    std::string file_name = program.get<std::vector<string>>("-mv")[0];
+    std::string destination_path = program.get<std::vector<string>>("-mv")[1];
 
     fs::path current_path = fs::current_path();
     fs::path source_file = current_path / file_name;
