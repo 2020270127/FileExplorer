@@ -85,8 +85,11 @@ int printSortedArr(char method, char standard){
         case 'q':
             switch(standard){
                 case 't' : quick_sort(arr, 0, size-1,&FileInfo::modified_time ,comp<int>);
+                    break;
                 case 's' : quick_sort(arr, 0, size-1,&FileInfo::size ,comp<int>);
+                    break;
                 case 'n' : quick_sort(arr, 0, size-1,&FileInfo::name ,comp<string>);
+                    break;
                 //case 'p' : quick_sort(arr, 0, size-1,&FileInfo::path ,comp<string>);
                 }
             break;
@@ -94,8 +97,11 @@ int printSortedArr(char method, char standard){
         case 'm':
             switch(standard){
                 case 't' : merge_sort(arr, 0, size-1,&FileInfo::modified_time ,comp<int>);
+                    break;
                 case 's' : merge_sort(arr, 0, size-1,&FileInfo::size ,comp<int>);
+                    break;
                 case 'n' : merge_sort(arr, 0, size-1,&FileInfo::name ,comp<string>);
+                    break;
                 //case 'p' : merge_sort(arr, 0, size-1,&FileInfo::path ,comp<string>);
             } 
             break;
@@ -103,8 +109,11 @@ int printSortedArr(char method, char standard){
         case 'h':
             switch(standard){
                 case 't' : heap_sort(arr, size, &FileInfo::modified_time ,comp<int>);
+                    break;
                 case 's' : heap_sort(arr, size, &FileInfo::size ,comp<int>);
+                    break;
                 case 'n' : heap_sort(arr, size, &FileInfo::name ,comp<string>);
+                    break;
                 //case 'p' : heap_sort(arr, size, &FileInfo::path ,comp<string>);
 
             } 
