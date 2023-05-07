@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     program.add_argument("-cp").help("copy src to dst").nargs(2); //파일 혹은 폴더 복사
     program.add_argument("-mv").help("move and").nargs(2); //이동
 
-    program.add_argument("-sort").help("sort list [algorithm]"); //정렬
+    program.add_argument("-sort").help("sort list [algorithm]").nargs(2); //정렬
     program.add_argument("-ss").help("search by substring"); //검색
 
    
