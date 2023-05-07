@@ -1,8 +1,8 @@
 #include "include/argparse.hpp"
+#include "include/fileinfo.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
-#include <iostream>
 #include <filesystem>
 
 #define BUF_SIZE 4096
@@ -152,6 +152,11 @@ int main(int argc, char *argv[]) {
     
 
     else if (program.is_used("-sort")) {
+        auto sortArgs = program.get<std::vector<std::string>>("-sort");
+        char method = sortArgs[0][0];
+        char algorithm = sortArgs[1][0];
+      
+        printSortedArr(method,algorithm);
         //sort
     }
     
