@@ -15,7 +15,7 @@ struct FileInfo {
 
 template <typename T>
 void printInfo(T *info_array, int size) {
-    const int fieldWidth = 15;
+    const int fieldWidth = 27;
 
     for (int i = 0; i < size; i++) {
         std::ostringstream oss;
