@@ -13,10 +13,6 @@ struct FileInfo {
     std::time_t modified_time;
 };
 
-#include <iostream>
-#include <sstream>
-#include <ctime>
-
 template <typename T>
 void printInfo(T *info_array, int size) {
     const int fieldWidth = 15;
