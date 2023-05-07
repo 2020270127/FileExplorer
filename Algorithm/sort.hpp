@@ -35,6 +35,9 @@ template <typename T> bool comp(T a, T b) {
         return 0;
 }
 
+
+
+
 template <typename T, typename U, typename CmpFunc = bool (*)(U, U)>
 void quick_sort(T array[], int left, int right, U value, CmpFunc cmp) {
     if (left < right) {
@@ -48,9 +51,18 @@ void quick_sort(T array[], int left, int right, U value, CmpFunc cmp) {
                 while (cmp(array[j].*value,pivot.*value))
                     j--;
                 if (i <= j) {
-                    tmp.*value = array[i].*value;
-                    array[i].*value = array[j].*value;
-                    array[j].*value = tmp.*value;
+                    tmp.name = array[i].name;
+                    array[i].name = array[j].name;
+                    array[j].name = tmp.name;
+                    
+                    tmp.size = array[i].size;
+                    array[i].size = array[j].size;
+                    array[j].size = tmp.size;
+
+                    tmp.modified_time = array[i].modified_time;
+                    array[i].modified_time = array[j].modified_time;
+                    array[j].modified_time = tmp.modified_time;
+
                     i++;
                     j--;
                 }
@@ -66,23 +78,34 @@ template <typename T, typename U, typename CmpFunc = bool (*)(U, U)>
 void merge(T *arr, int left, int mid, int right, U value, CmpFunc cmp) {
     int i = left, j = mid + 1, k = 0;
     T *tmp = new T[right - left + 1];
-
+    
     while (i <= mid && j <= right) {
         if (cmp(arr[j].*value,arr[i].*value)) {
-            tmp[k++].*value = arr[i++].*value;
+            tmp[k].name = arr[i].name;
+            tmp[k].size = arr[i].size;
+            tmp[k++].modified_time = arr[i++].modified_time;
+
         } else {
-            tmp[k++].*value = arr[j++].*value;
+            tmp[k].name = arr[j].name;
+            tmp[k].size = arr[j].size;
+            tmp[k++].modified_time = arr[j++].modified_time;
         }
     }
     while (i <= mid) {
-        tmp[k++].*value = arr[i++].*value;
+        tmp[k].name = arr[i].name;
+        tmp[k].size = arr[i].size;
+        tmp[k++].modified_time = arr[i++].modified_time;
     }
     while (j <= right) {
-        tmp[k++].*value = arr[j++].*value;
+        tmp[k].name = arr[j].name;
+        tmp[k].size = arr[j].size;
+        tmp[k++].modified_time = arr[j++].modified_time;
     }
 
     for (int p = 0; p < k; p++) {
-        arr[left + p].*value = tmp[p].*value;
+        arr[left + p].name = tmp[p].name;
+        arr[left + p].size = tmp[p].size;
+        arr[left + p].modified_time = tmp[p].modified_time;
     }
 }
 
@@ -119,7 +142,10 @@ void heapify(T array[], int heapsize, int i, U value, CmpFunc cmp) {
 
     // 왼쪽 or 오른쪽 자식 노드 중 부모 노드보다 큰 값이 존재한 경우
     if (i != parentNode) {
-        swap(&(array[parentNode].*value), &(array[i].*value));
+        swap(&(array[parentNode].name), &(array[i].name));
+        swap(&(array[parentNode].size), &(array[i].size));
+        swap(&(array[parentNode].modified_time), &(array[i].modified_time));
+
         // 초기 부모노드가 제자리를 찾을 때까지 내려갑니다.
         heapify(array, heapsize, parentNode, value, cmp);
     }
@@ -134,7 +160,9 @@ void heap_sort(T *arr, int size, U value, CmpFunc cmp) {
     }
     // heap sort
     for (int i = size - 1; i > 0; i--) { // max heap을 size - 1번 뒤로 보내기
-        swap(&(arr[i].*value), &(arr[0].*value));          // max heap을 배열뒤로 보낸다.
+        swap(&(arr[i].name), &(arr[0].name));          // max heap을 배열뒤로 보낸다.
+        swap(&(arr[i].size), &(arr[0].size));
+        swap(&(arr[i].modified_time), &(arr[0].modified_time));
         heapify(arr, i, 0, value, cmp);
     }
     return;
