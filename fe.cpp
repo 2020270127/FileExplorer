@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     argparse::ArgumentParser program("FileExplorer");
 
     // Args list
-    program.add_argument("-dir").default_value("./").help("target dir");
+    program.add_argument("-dir").default_value("./").help("target dir").nargs(0);
     program.add_argument("-mkdir").help("make dir"); //폴더 생성
     program.add_argument("-rm").help("remove file or dir"); //파일 혹은 폴더 삭제 
     program.add_argument("-touch").help("touch"); //파일 생성
@@ -29,10 +29,14 @@ int main(int argc, char *argv[]) {
     std::cerr << err.what() << std::endl;
     std::cerr << program;
   }
+    
+    if (program.is_used("-dir")) { //현재 경로 출력
+        cout << filesystem::current_path() << endl;
+    }
 
-    if (program.is_used("-rm")) {  //파일 삭제기능, 강제 삭제 디폴트
+    else if (program.is_used("-rm")) {  //파일 삭제기능, 강제 삭제 디폴트
     std::string path_to_remove = program.get<string>("-rm");
-
+        
     try {
         if (std::filesystem::exists(path_to_remove)) {
             std::filesystem::remove_all(path_to_remove);
@@ -44,10 +48,6 @@ int main(int argc, char *argv[]) {
     }
 }
     
-    else if (program.is_used("-dir")) { //현재 경로 출력
-        cout << program.get<string>("-dir");
-    }
-
     else if (program.is_used("-mkdir")) { // 폴더 생성
     std::string path_to_create = program.get<string>("-mkdir");
     try {
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
         }
     } catch (const std::exception& ex) {
         std::cerr << "Error creating file: " << file_path << ", error: " << ex.what() << std::endl;
-    }
+        }
     }
 
     else if (program.is_used("-cp")) {   
