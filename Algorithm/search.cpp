@@ -26,4 +26,5 @@ int strstr(char str[], char key[]) {
         }
         keyptr++;
     }
+    return 0;
 }
