@@ -7,7 +7,7 @@ enable_testing()
 add_executable(
     fe fe.cpp
     Algorithm/fileinfo.cpp
-    Algorithm/sort.cpp
+    Algorithm/sort.hpp
     Algorithm/search.cpp
 )
 add_compile_options(-Wall)
