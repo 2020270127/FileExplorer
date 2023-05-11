@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 #include <ctime>
 #include <string>
+#include <sstream>
 #include <iostream>
 #include "sort.hpp"
 
