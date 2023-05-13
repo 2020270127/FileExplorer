@@ -1,8 +1,8 @@
 #include "include/argparse.hpp"
+#include "Algorithm/fileinfo.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
-#include <iostream>
 #include <filesystem>
 
 #define BUF_SIZE 4096
@@ -12,14 +12,14 @@ int main(int argc, char *argv[]) {
     argparse::ArgumentParser program("FileExplorer");
 
     // Args list
-    program.add_argument("-dir").default_value("./").help("target dir");
+    program.add_argument("-dir").default_value("./").help("target dir").nargs(0);
     program.add_argument("-mkdir").help("make dir"); //폴더 생성
     program.add_argument("-rm").help("remove file or dir"); //파일 혹은 폴더 삭제 
     program.add_argument("-touch").help("touch"); //파일 생성
     program.add_argument("-cp").help("copy src to dst").nargs(2); //파일 혹은 폴더 복사
     program.add_argument("-mv").help("move and").nargs(2); //이동
 
-    program.add_argument("-sort").help("sort list [algorithm]"); //정렬
+    program.add_argument("-sort").help("sort list [algorithm]").nargs(2); //정렬
     program.add_argument("-ss").help("search by substring"); //검색
 
    
@@ -29,10 +29,14 @@ int main(int argc, char *argv[]) {
     std::cerr << err.what() << std::endl;
     std::cerr << program;
   }
+    
+    if (program.is_used("-dir")) { //현재 경로 출력
+        cout << filesystem::current_path() << endl;
+    }
 
-    if (program.is_used("-rm")) {  //파일 삭제기능, 강제 삭제 디폴트
+    else if (program.is_used("-rm")) {  //파일 삭제기능, 강제 삭제 디폴트
     std::string path_to_remove = program.get<string>("-rm");
-
+        
     try {
         if (std::filesystem::exists(path_to_remove)) {
             std::filesystem::remove_all(path_to_remove);
@@ -44,10 +48,6 @@ int main(int argc, char *argv[]) {
     }
 }
     
-    else if (program.is_used("-dir")) { //현재 경로 출력
-        cout << program.get<string>("-dir");
-    }
-
     else if (program.is_used("-mkdir")) { // 폴더 생성
     std::string path_to_create = program.get<string>("-mkdir");
     try {
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
         }
     } catch (const std::exception& ex) {
         std::cerr << "Error creating file: " << file_path << ", error: " << ex.what() << std::endl;
-    }
+        }
     }
 
     else if (program.is_used("-cp")) {   
@@ -132,8 +132,8 @@ int main(int argc, char *argv[]) {
 
     namespace fs = std::filesystem;
 
-    std::string file_name = program.get<std::vector<string>>("-cp")[0];
-    std::string destination_path = program.get<std::vector<string>>("-cp")[1];
+    std::string file_name = program.get<std::vector<string>>("-mv")[0];
+    std::string destination_path = program.get<std::vector<string>>("-mv")[1];
 
     fs::path current_path = fs::current_path();
     fs::path source_file = current_path / file_name;
@@ -152,6 +152,11 @@ int main(int argc, char *argv[]) {
     
 
     else if (program.is_used("-sort")) {
+        auto sortArgs = program.get<std::vector<std::string>>("-sort");
+        char method = sortArgs[0][0];
+        char algorithm = sortArgs[1][0];
+      
+        printSortedArr(method,algorithm);
         //sort
     }
     
