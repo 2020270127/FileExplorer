@@ -172,7 +172,6 @@ int printSortedArr(char method, char standard) {
     default:
         return -1;
     }
-
     printInfo(arr, size);
     return 0;
 }
@@ -187,7 +186,7 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
                     printInfo(getInfo(entry.path()), 1);
             break;
             case STRSTR:
-                if (strstr(entry.path().filename().string(), pattern))
+                if (strstr(entry.path().filename().string(), pattern) != -1)
                     printInfo(getInfo(entry.path()), 1);
             break;
             default:
@@ -202,5 +201,5 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
 
 int main() { // test code
     string path = "./";
-    printSearchedInDir(path, "li", STRSTR);
+    printSearchedInDir(path, "li", KMP);
 }

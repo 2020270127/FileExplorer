@@ -26,7 +26,7 @@ int strstr(string str, string key){
         }
         keyptr++;
     }
-    return 0;
+    return -1;
 
     
 }
