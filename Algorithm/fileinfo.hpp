@@ -2,6 +2,9 @@
 #include <string>
 #include <sys/stat.h>
 
+#define KMP 0
+#define STRSTR 1
+
 namespace fs = std::filesystem;
 struct FileInfo {
     std::string name;
@@ -35,6 +38,6 @@ int getSize(fs::path path);
 
 int printSortedArr(char method, char standard);
 
-int printSearchedInDir(fs::path const &dirpath, string pattern);
+int printSearchedInDir(fs::path const &dirpath, string pattern, int method);
 
 FileInfo *getInfoArray();

@@ -7,6 +7,9 @@
 #include <string>
 #include <sys/stat.h>
 
+#define KMP 0
+#define STRSTR 1
+
 namespace fs = std::filesystem;
 
 struct FileInfo {
@@ -173,17 +176,30 @@ int printSortedArr(char method, char standard) {
     return 0;
 }
 
-int printSearchedInDir(fs::path const &dirpath, string pattern) {
+int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
     for (const auto &entry : fs::directory_iterator(dirpath)) {
         if (entry.is_directory())
             continue; // 디렉토리는 skip
-        if (kmp(entry.path().filename().string(), pattern))
-            printInfo(getInfo(entry.path()), 1);
+        switch(method){
+            case KMP:
+                if (kmp(entry.path().filename().string(), pattern))
+                    printInfo(getInfo(entry.path()), 1);
+            break;
+            case STRSTR:
+                if (strstr(entry.path().filename().string(), pattern))
+                    printInfo(getInfo(entry.path()), 1);
+            break;
+            default:
+                cout << "Wrong Search Method" << endl;
+                return -1;
+            break;
+        }   
+        return 0;
         // std::cout << entry.path().filename().string() << std::endl; // 파일명 출력
     }
 }
 
-// int main() {
+// int main() { // test code
 //     string path = "./";
-//     printSearchedInDir(path, "li");
+//     printSearchedInDir(path, "li", STRSTR);
 // }
