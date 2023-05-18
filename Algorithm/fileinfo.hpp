@@ -2,6 +2,7 @@
 #include <string>
 #include <sys/stat.h>
 
+namespace fs = std::filesystem;
 struct FileInfo {
     std::string name;
     uintmax_t size;
@@ -30,5 +31,10 @@ template <typename T> void printInfo(T *info_array, int size) {
 
 int getSize();
 
+int getSize(fs::path path);
+
 int printSortedArr(char method, char standard);
-FileInfo *getInfo();
+
+int printSearchedInDir(fs::path const &dirpath, string pattern);
+
+FileInfo *getInfoArray();
