@@ -1,8 +1,9 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <vector>
 namespace fs = std::filesystem;
-using namespace std;
+
 
 void recursive(fs::path const& p, std::vector<std::string>& dic) {
     
@@ -17,7 +18,7 @@ void recursive(fs::path const& p, std::vector<std::string>& dic) {
 			
     		//만약 폴더인경우, 해당경로로 함수 재귀적 호출
 		if (i->is_directory()){
-            dic.push_back(i->path());//폴더 경로를 dic에 저장
+            dic.push_back(i->path().string());//폴더 경로를 dic에 저장
 			recursive(i->path(),dic);
             }
 			 
@@ -29,7 +30,7 @@ void recursive(fs::path const& p, std::vector<std::string>& dic) {
 int main() {
 	std::vector<std::string> dic;
     int count =30;
-    string *q = new string [count];
+    std::string *q = new std::string [count];
 	fs::path p = fs::current_path();
     recursive(p,dic);
 	

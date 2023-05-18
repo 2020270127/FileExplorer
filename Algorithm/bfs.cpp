@@ -17,8 +17,8 @@ void recursive(fs::path const& p, std::vector<std::string>& dic,queue<string>& q
 			
     		//만약 폴더인경우, 해당경로로 함수 재귀적 호출
 		if (i->is_directory()){
-            que.push(i->path());
-			dic.push_back(i->path());
+            que.push(i->path().string());
+			dic.push_back(i->path().string());
             }
 			 
 	
@@ -43,7 +43,7 @@ int main() {
 	std::vector<std::string> dic;
     queue<string> que;
     
-	fs::path p ="/Users/leedongkyu/Desktop/filesystem/a";
+	fs::path p ="/Users/";
     recursive(p,dic,que);
 	
 	 for (const auto& fileName : dic)
