@@ -37,6 +37,8 @@ void printInfo(FileInfo *info_array, int size) {
 
         std::cout << oss.str() << std::endl << std::endl;
     }
+    for(int i = 0 ;i < size; i++){}
+    delete[] info_array; // 할당 해제
 }
 
 int getSize() {
@@ -84,7 +86,7 @@ FileInfo *getInfoArray() {
 
 FileInfo *getInfo(fs::path filepath) {
 
-    FileInfo *info = new FileInfo;
+    FileInfo *info = new FileInfo[1];
     int i = 0;
     fs::directory_entry entry = fs::directory_entry(filepath);
 
@@ -172,7 +174,6 @@ int printSortedArr(char method, char standard) {
     }
 
     printInfo(arr, size);
-    delete[] arr; // 할당 해제
     return 0;
 }
 
@@ -194,12 +195,12 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
                 return -1;
             break;
         }   
-        return 0;
         // std::cout << entry.path().filename().string() << std::endl; // 파일명 출력
     }
+    return 0;
 }
 
-// int main() { // test code
-//     string path = "./";
-//     printSearchedInDir(path, "li", STRSTR);
-// }
+int main() { // test code
+    string path = "./";
+    printSearchedInDir(path, "li", STRSTR);
+}
