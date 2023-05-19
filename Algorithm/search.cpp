@@ -6,11 +6,10 @@
 #include <queue>
 #include <unordered_set>
 #include <vector>
-#include "fileinfo.hpp"
+#include "fileinfo.cpp"
 namespace fs = std::filesystem;
 using namespace std;
-#define KMP 1
-#define STRSTR 0
+
 #define MAX_STRING_LENGTH 100  // 파일이름의 최대 길이
 #define MAX_PATTERN_LENGTH 100  // 찾을 파일이름의 최대 길이
 #define MAX_STRUCT_COUNT 100   // 파일정보 구조체 배열의 최대 크기
@@ -163,15 +162,18 @@ void drecursive_s(const fs::path& p, const std::string& target) {
     }
 }
 
-void dfs(const std::string& target, int method) {
+void dfs(const fs::path& p, const std::string& target, int method) {
     std::vector<std::string> dic;
-    fs::path p = fs::current_path();
     switch(method){
         case KMP:
             drecursive_k(p,target);
             break;
         case STRSTR:
             drecursive_s(p,target);
+            break;
+        default:
+            cout << "dfs method error" << endl;
+            return;
     }
     
     for (const auto& folder : dic) {
@@ -179,48 +181,40 @@ void dfs(const std::string& target, int method) {
     }
 }
 
+void bfs(const fs::path& p, const std::string& target, int method) {
+    
+	std::error_code ec; //예외사항을 잡아내기위한 클래스
+	fs::directory_iterator iter(p, ec);
+    static queue<string> que;
+   	//만약 값이 없다면, 함수종료
+    	//참고로, std::error_code의 value함수는 예외사항이 발생하면 0이 아닌 값을 반환합니다.
+	if (ec.value() != 0) return ;
 
-void bfs(const std::string& keyword, int method) {
-    std::queue<std::string> q;
-    std::unordered_set<std::string> visited;
-
-	const std::string& rootPath = fs::current_path();
-    q.push(rootPath);
-    visited.insert(rootPath);
-
-    while (!q.empty()) {
-        std::string currentPath = q.front();
-        q.pop();
-
-        // 현재 디렉토리에 대한 작업 수행
-        std::cout << currentPath << std::endl;
-
-        for (const auto& entry : fs::directory_iterator(currentPath)) {
-            std::string entryPath = entry.path().string();
-
-            if (entry.is_directory()) {
-                if (visited.find(entryPath) == visited.end()) {
-                    q.push(entryPath);
-                    visited.insert(entryPath);
-                }
-            } else if (entry.is_regular_file()) {
-				switch(method){
-					case KMP:
-						if (kmp(entryPath,keyword)) {
-                    // 특정 문자열을 가지고 있는 파일을 찾았을 때 작업 수행
-                    	std::cout << "Found: " << entryPath << std::endl;
-						break;
-					case STRSTR:
-						if (strstr(entryPath,keyword)) {
-                    // 특정 문자열을 가지고 있는 파일을 찾았을 때 작업 수행
-                    	std::cout << "Found: " << entryPath << std::endl;
-                }
-                }
-				}
-                
+	for (auto& i = iter; i != fs::end(iter); i++) {// 디렉토리내의 for문 
+		switch(method){
+        case KMP:
+            if (kmp(i->path().filename().string(), target)){
+                printInfo(getInfo(i->path()), 1);
             }
+            break;
+        case STRSTR:
+            if (strstr(i->path().filename().string(), target) != -1){
+                printInfo(getInfo(i->path()), 1);
+            }
+            break;
+        }   
+    	//만약 폴더인경우, 해당경로로 큐에 push하여 대기열 저장
+		if (i->is_directory()){
+            que.push(i->path().string());
         }
     }
+	if (que.empty())
+		return;
+	else if(!que.empty()){
+		string nextDir = que.front();
+		que.pop();
+		bfs(nextDir, target, method); // 큐 순서대로 큐 빌때까지 반복
+	}
 }
 
 
@@ -228,6 +222,7 @@ void bfs(const std::string& keyword, int method) {
 
 int main(){
 	//dfs("df",KMP); //working
-    dfs("df",STRSTR); // not working
+    fs::path p = "C:\\Users\\BISB\\OneDrive\\Univ\\23-1\\DataStructure\\DataStructure-FileExplorer\\Algorithm\\test";
+    bfs(p, "hi",STRSTR); 
 	return 0;
 }

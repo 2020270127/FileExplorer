@@ -38,7 +38,7 @@ int getSize(fs::path path);
 
 int printSortedArr(char method, char standard);
 
-int printSearchedInDir(fs::path const &dirpath, string pattern, int method);
+int printSearchedInDir(fs::path const &dirpath, std::string pattern, int method);
 
 FileInfo *getInfoArray();
 FileInfo *getInfo(fs::path filepath);

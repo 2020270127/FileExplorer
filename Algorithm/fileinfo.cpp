@@ -1,4 +1,4 @@
-#include "search.cpp"
+#include "search.hpp"
 #include "sort.hpp"
 #include <ctime>
 #include <filesystem>
@@ -199,7 +199,7 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
     return 0;
 }
 
-int main() { // test code
-    string path = "./";
-    printSearchedInDir(path, "li", KMP);
-}
+// int main() { // test code
+//     string path = "./";
+//     printSearchedInDir(path, "li", KMP);
+// }
