@@ -3,9 +3,13 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
-#include <iostream>
+#include <queue>
+#include <unordered_set>
+#include <vector>
+namespace fs = std::filesystem;
 using namespace std;
-
+#define KMP 1
+#define STRSTR 0
 #define MAX_STRING_LENGTH 100  // 파일이름의 최대 길이
 #define MAX_PATTERN_LENGTH 100  // 찾을 파일이름의 최대 길이
 #define MAX_STRUCT_COUNT 100   // 파일정보 구조체 배열의 최대 크기
@@ -126,29 +130,95 @@ bool kmp(string text, string pattern) {
     return false;
 }
 
-//테스토용
-// int main() {
-//     // 구조체 배열 초기화
-//     Fileinfo arr[MAX_STRUCT_COUNT] = {
-//         {"Hello World", 11},
-//         {"This is a test", 14},
-//         {"Goodbye", 7},
-//         {"Programming", 11},
-//         {"This is KMP algorithm", 13}
-//     };
+void drecursive_k(const fs::path& p, const std::string& target, std::vector<std::string>& dic) {
+    for (const auto& entry : fs::directory_iterator(p)) {
+        if (entry.is_directory()) {
+            if (kmp(entry.path().filename().string(), target)) {
+                dic.push_back(entry.path().string());
+            } else {
+                drecursive_k(entry.path(), target, dic);
+            }
+        }
+    }
+}
 
-//     int arr_len = sizeof(arr) / sizeof(Fileinfo);
+void drecursive_s(const fs::path& p, const std::string& target, std::vector<std::string>& dic) {
+    for (const auto& entry : fs::directory_iterator(p)) {
+        if (entry.is_directory()) {
+            if (strstr(entry.path().filename().string(), target) != -1) {
+                dic.push_back(entry.path().string());
+            } else {
+                drecursive_s(entry.path(), target, dic);
+            }
+        }
+    }
+}
 
-//     char pattern[MAX_PATTERN_LENGTH + 1];  // 패턴 문자열
-//     printf("파일 이름을 입력하시오 : ");
-//     scanf("%[^\n]", pattern);              // %[^\n] --> 패턴 문자열의 공백 제거
+void dfs(const std::string& target, int method) {
+    std::vector<std::string> dic;
+    fs::path p = fs::current_path();
+    switch(method){
+        case KMP:
+            drecursive_k(p,target,dic);
+            break;
+        case STRSTR:
+            drecursive_s(p,target,dic);
+    }
+    
+    for (const auto& folder : dic) {
+        std::cout << folder << std::endl;
+    }
+}
 
-//     // 구조체 배열에서 패턴 문자열 찾기
-//     for (int i = 0; i < arr_len; i++) {
-//         if (kmp(arr[i].name, pattern)) {
-//             std::cout<<arr[i].name<<" 파일은 "<<i+1<<"번째에 있습니다."<<std::endl;
-//         }
-//     }
 
-//     return 0;
-// } 
+void bfs(const std::string& keyword, int method) {
+    std::queue<std::string> q;
+    std::unordered_set<std::string> visited;
+
+	const std::string& rootPath = fs::current_path();
+    q.push(rootPath);
+    visited.insert(rootPath);
+
+    while (!q.empty()) {
+        std::string currentPath = q.front();
+        q.pop();
+
+        // 현재 디렉토리에 대한 작업 수행
+        std::cout << currentPath << std::endl;
+
+        for (const auto& entry : fs::directory_iterator(currentPath)) {
+            std::string entryPath = entry.path().string();
+
+            if (entry.is_directory()) {
+                if (visited.find(entryPath) == visited.end()) {
+                    q.push(entryPath);
+                    visited.insert(entryPath);
+                }
+            } else if (entry.is_regular_file()) {
+				switch(method){
+					case KMP:
+						if (kmp(entryPath,keyword)) {
+                    // 특정 문자열을 가지고 있는 파일을 찾았을 때 작업 수행
+                    	std::cout << "Found: " << entryPath << std::endl;
+						break;
+					case STRSTR:
+						if (strstr(entryPath,keyword)) {
+                    // 특정 문자열을 가지고 있는 파일을 찾았을 때 작업 수행
+                    	std::cout << "Found: " << entryPath << std::endl;
+                }
+                }
+				}
+                
+            }
+        }
+    }
+}
+
+
+
+
+int main(){
+	dfs("df",KMP); //working
+    bfs("df",STRSTR); // not working
+	return 0;
+}
