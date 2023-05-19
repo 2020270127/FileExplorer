@@ -6,6 +6,7 @@
 #include <queue>
 #include <unordered_set>
 #include <vector>
+#include "fileinfo.hpp"
 namespace fs = std::filesystem;
 using namespace std;
 #define KMP 1
@@ -130,25 +131,33 @@ bool kmp(string text, string pattern) {
     return false;
 }
 
-void drecursive_k(const fs::path& p, const std::string& target, std::vector<std::string>& dic) {
+void drecursive_k(const fs::path& p, const std::string& target) {
     for (const auto& entry : fs::directory_iterator(p)) {
         if (entry.is_directory()) {
             if (kmp(entry.path().filename().string(), target)) {
-                dic.push_back(entry.path().string());
+                printInfo(getInfo(entry.path()), 1);
             } else {
-                drecursive_k(entry.path(), target, dic);
+                drecursive_k(entry.path(), target);
             }
+        } else{
+            if (kmp(entry.path().filename().string(), target)) {
+                printInfo(getInfo(entry.path()), 1);
+            } 
         }
     }
 }
 
-void drecursive_s(const fs::path& p, const std::string& target, std::vector<std::string>& dic) {
+void drecursive_s(const fs::path& p, const std::string& target) {
     for (const auto& entry : fs::directory_iterator(p)) {
         if (entry.is_directory()) {
             if (strstr(entry.path().filename().string(), target) != -1) {
-                dic.push_back(entry.path().string());
+                printInfo(getInfo(entry.path()), 1);
             } else {
-                drecursive_s(entry.path(), target, dic);
+                drecursive_s(entry.path(), target);
+            }
+        } else {
+             if (strstr(entry.path().filename().string(), target) != -1) {
+                printInfo(getInfo(entry.path()), 1);
             }
         }
     }
@@ -159,10 +168,10 @@ void dfs(const std::string& target, int method) {
     fs::path p = fs::current_path();
     switch(method){
         case KMP:
-            drecursive_k(p,target,dic);
+            drecursive_k(p,target);
             break;
         case STRSTR:
-            drecursive_s(p,target,dic);
+            drecursive_s(p,target);
     }
     
     for (const auto& folder : dic) {
@@ -218,7 +227,7 @@ void bfs(const std::string& keyword, int method) {
 
 
 int main(){
-	dfs("df",KMP); //working
-    bfs("df",STRSTR); // not working
+	//dfs("df",KMP); //working
+    dfs("df",STRSTR); // not working
 	return 0;
 }
