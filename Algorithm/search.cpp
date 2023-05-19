@@ -220,9 +220,9 @@ void bfs(const fs::path& p, const std::string& target, int method) {
 
 
 
-int main(){
-	//dfs("df",KMP); //working
-    fs::path p = "C:\\Users\\BISB\\OneDrive\\Univ\\23-1\\DataStructure\\DataStructure-FileExplorer\\Algorithm\\test";
-    bfs(p, "hi",STRSTR); 
-	return 0;
-}
+// int main(){
+// 	//dfs("df",KMP); //working
+//     fs::path p = "C:\\Users\\BISB\\OneDrive\\Univ\\23-1\\DataStructure\\DataStructure-FileExplorer\\Algorithm\\test";
+//     bfs(p, "hi",STRSTR); 
+// 	return 0;
+// }

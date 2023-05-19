@@ -7,9 +7,6 @@
 #include <string>
 #include <sys/stat.h>
 
-#define KMP 0
-#define STRSTR 1
-
 namespace fs = std::filesystem;
 
 struct FileInfo {
