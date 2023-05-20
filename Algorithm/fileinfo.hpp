@@ -2,7 +2,7 @@
 #include <string>
 #include <sys/stat.h>
 #include <filesystem>
-#indef __APPLE__
+#ifdef __APPLE__
 #include <sstream>
 #endif
 
