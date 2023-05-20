@@ -2,6 +2,9 @@
 #include <string>
 #include <sys/stat.h>
 #include <filesystem>
+#indef __APPLE__
+#include <sstream>
+#endif
 
 #define KMP 0
 #define STRSTR 1
