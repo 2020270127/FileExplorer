@@ -1,7 +1,12 @@
 #pragma once
+#pragma once
 #include <string>
+#include <filesystem>
+
 #define KMP 0
 #define STRSTR 1
+
+namespace fs = std::filesystem;
 
 int strstr(char text[], char pattern[]);
 bool kmp(char text[], char pattern[]);

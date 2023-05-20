@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <sys/stat.h>
+#include <filesystem>
 
 #define KMP 0
 #define STRSTR 1
