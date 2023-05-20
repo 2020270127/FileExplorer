@@ -7,6 +7,11 @@
 #include <unordered_set>
 #include <vector>
 #include "fileinfo.hpp"
+
+#ifdef __APPLE__
+#include <sstream>
+#endif
+
 namespace fs = std::filesystem;
 using namespace std;
 
