@@ -2,6 +2,9 @@
 #include <string>
 #include <sys/stat.h>
 #include <filesystem>
+#ifdef __APPLE__
+#include <sstream>
+#endif
 
 #define KMP 0
 #define STRSTR 1
@@ -47,3 +50,4 @@ template <typename T> void printInfo(T *info_array, int size) {
         std::cout << oss.str() << std::endl << std::endl;
     }
 }
+void searchFile(const fs::path& p, const std::string& target, int method, int algorithm);
