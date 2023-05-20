@@ -7,6 +7,9 @@
 #include <string>
 #include <sys/stat.h>
 
+#define DFS 0
+#define BFS 1
+
 namespace fs = std::filesystem;
 
 struct FileInfo {
@@ -70,9 +73,9 @@ FileInfo *getInfoArray() {
             info_array[i].name = entry.path().filename().string();
             // info_array[i].path = entry.path().string();
             info_array[i].size = entry.is_directory() ? 0 : entry.file_size();
-            if (stat(&(info_array[i].name)[0], &st) != 0) {
-                std::cout << "Failed to get file status" << std::endl;
-            }
+            // if (stat(&(info_array[i].name)[0], &st) != 0) {
+            //     std::cout << "Failed to get file status" << std::endl;
+            // }
             info_array[i].modified_time = st.st_mtime;
             info_array[i].is_directory = entry.is_directory();
             i++;
@@ -92,9 +95,9 @@ FileInfo *getInfo(fs::path filepath) {
         info->name = entry.path().filename().string();
         // info_array[i].path = entry.path().string();
         info->size = entry.is_directory() ? 0 : entry.file_size();
-        if (stat(&(info->name)[0], &st) != 0) {
-            std::cout << "Failed to get file status" << std::endl;
-        }
+        // if (stat(&(info->name)[0], &st) != 0) {
+        //     std::cout << "Failed to get file status" << std::endl;
+        // }
         info->modified_time = st.st_mtime;
         info->is_directory = entry.is_directory();
         i++;
@@ -194,6 +197,19 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
         // std::cout << entry.path().filename().string() << std::endl; // 파일명 출력
     }
     return 0;
+}
+
+void searchFile(const fs::path& p, const std::string& target, int method, int algorithm){
+    switch(algorithm){
+        case BFS:
+            bfs(p, target,method);
+            break;
+        case DFS:
+            dfs(p, target,method);
+        break;
+        default:
+            cout<<"Wrong search algoritm"<<endl;
+    }
 }
 
 // int main() { // test code
