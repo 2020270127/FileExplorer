@@ -185,7 +185,7 @@ void bfs(const fs::path& p, const std::string& target, int method) {
     
 	std::error_code ec; //예외사항을 잡아내기위한 클래스
 	fs::directory_iterator iter(p, ec);
-    static queue<string> que;
+    static queue<string> que;// 큐는 항상 유지
    	//만약 값이 없다면, 함수종료
     	//참고로, std::error_code의 value함수는 예외사항이 발생하면 0이 아닌 값을 반환합니다.
 	if (ec.value() != 0) return ;
