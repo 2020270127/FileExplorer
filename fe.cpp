@@ -18,9 +18,9 @@ int main(int argc, char *argv[]) {
     program.add_argument("-touch").help("touch"); //파일 생성
     program.add_argument("-cp").help("copy src to dst").nargs(2); //파일 혹은 폴더 복사
     program.add_argument("-mv").help("move and").nargs(2); //이동
-
     program.add_argument("-sort").help("sort list [algorithm]").nargs(2); //정렬
-    program.add_argument("-ss").help("search by substring"); //검색
+    program.add_argument("-ss").help("search by substring").nargs(3);
+    program.add_argument("-path").help("where to search").nargs(1); //검색
 
    
   try {
@@ -161,6 +161,17 @@ int main(int argc, char *argv[]) {
     }
     
     else if (program.is_used("-ss")) {
+        auto sortArgs = program.get<std::vector<std::string>>("-ss");
+        auto Path = program.get<std::vector<std::string>>("-path");
+
+        int method = sortArgs[0] == "DFS" ? 0:1;
+        int algorithm = sortArgs[1] == "KMP" ? 0:1;
+        std::string pattern = sortArgs[2];
+        std::string path = Path.empty() ? std::filesystem::current_path().string() : Path[0];
+
+        searchFile(path, pattern, method, algorithm);
+        //method >> kmp or strstr , algorithm >> dfs or bfs
+        //./fe -ss KMP DFS "df"  
         //ss
     }
 
