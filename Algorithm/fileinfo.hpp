@@ -1,7 +1,8 @@
 #pragma once
+#include <filesystem>
+#include <iostream>
 #include <string>
 #include <sys/stat.h>
-#include <filesystem>
 #ifdef __APPLE__
 #include <sstream>
 #endif
@@ -23,12 +24,14 @@ template <typename T> void printInfo(T *info_array, int size);
 
 int printSortedArr(char method, char standard);
 
-int printSearchedInDir(fs::path const &dirpath, std::string pattern, int method);
+int printSearchedInDir(fs::path const &dirpath, std::string pattern,
+                       int method);
 
 FileInfo *getInfoArray();
 FileInfo *getInfo(fs::path filepath);
 
-void searchFile(const fs::path& p, const std::string& target, int method, int algorithm);
+void searchFile(const fs::path &p, const std::string &target, int method,
+                int algorithm);
 
 template <typename T> void printInfo(T *info_array, int size) {
     const int fieldWidth = 27;

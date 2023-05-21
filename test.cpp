@@ -137,7 +137,7 @@ int main(){
     fs::path p = fs::current_path().string() + "\\..\\Algorithm\\test";
     cout << "DFS test" << endl;
     cout << p.string() << " path search" << endl;
-    dfs(p, "df",KMP); //working
+    dfs(p, "hi",KMP); //working
     
 
     cout << "BFS test" << endl;
