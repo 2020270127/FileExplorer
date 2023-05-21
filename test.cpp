@@ -12,13 +12,6 @@ std::string generateRandomString() {
     std::string chars = "abcdefghijklmnopqrstuvwxyz";
     std::string result;
 
-    // 랜덤 시드 초기화
-    static bool seedInitialized = false;
-    if (!seedInitialized) {
-        std::srand(static_cast<unsigned int>(std::time(nullptr)));
-        seedInitialized = true;
-    }
-
     // 문자열 길이 50으로 설정
     while (result.length() < 50) {
         char randomChar = chars[std::rand() % chars.length()];
@@ -50,7 +43,9 @@ int main(){
         fileArray[i].is_directory = (std::rand() % 2 == 0);
         fileArray[i].modified_time = currentTime + (std::rand() % 3600);
     } //랜덤 구조체 생성
-
+    
+    std::srand(static_cast<unsigned int>(std::time(nullptr))); // 랜덤 시드 초기화
+    
     // 3가지 정렬함수로 정렬 후 검사
     // quick_sort check
     quick_sort(fileArray, 0, 4, &FileInfo::modified_time, comp<int>);
