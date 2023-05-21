@@ -138,7 +138,7 @@ void heap_sort(T *arr, int size, U value, CmpFunc cmp) {
     // 제자리 정렬(추가 메모리 필요x), O(nlogn) 불안정 정렬
     // 배열 max heapify
     for (int i = (size - 1) / 2; i >= 0; i--) {
-        heapify(arr, size - 1, i, value, cmp); // 밑에 있는 부모노드부터 heapify
+        heapify(arr, size, i, value, cmp); // 밑에 있는 부모노드부터 heapify
     }
     // heap sort
     for (int i = size - 1; i > 0; i--) { // max heap을 size - 1번 뒤로 보내기
