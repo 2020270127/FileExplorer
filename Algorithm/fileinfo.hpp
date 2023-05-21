@@ -1,13 +1,37 @@
 #pragma once
+#include <filesystem>
+#include <iostream>
 #include <string>
 #include <sys/stat.h>
+#ifdef __APPLE__
+#include <sstream>
+#endif
 
+#define KMP 0
+#define STRSTR 1
+
+namespace fs = std::filesystem;
 struct FileInfo {
     std::string name;
     uintmax_t size;
     bool is_directory;
     std::time_t modified_time;
 };
+
+int getSize(fs::path path);
+
+template <typename T> void printInfo(T *info_array, int size);
+
+int printSortedArr(char method, char standard);
+
+int printSearchedInDir(fs::path const &dirpath, std::string pattern,
+                       int method);
+
+FileInfo *getInfoArray();
+FileInfo *getInfo(fs::path filepath);
+
+void searchFile(const fs::path &p, const std::string &target, int method,
+                int algorithm);
 
 template <typename T> void printInfo(T *info_array, int size) {
     const int fieldWidth = 27;
@@ -27,8 +51,3 @@ template <typename T> void printInfo(T *info_array, int size) {
         std::cout << oss.str() << std::endl << std::endl;
     }
 }
-
-int getSize();
-
-int printSortedArr(char method, char standard);
-FileInfo *getInfo();

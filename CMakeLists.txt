@@ -13,6 +13,13 @@ add_executable(
     Algorithm/sort.hpp
     Algorithm/search.cpp
 )
+
+add_executable(
+    newtest test.cpp
+    Algorithm/fileinfo.cpp
+    Algorithm/sort.hpp
+    Algorithm/search.cpp
+)
 add_compile_options(-Wall)
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
