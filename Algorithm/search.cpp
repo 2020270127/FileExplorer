@@ -85,7 +85,7 @@ bool kmp(char text[], char pattern[]) {
     j = 0;
     for (int i = 0; i < strlen(text); i++) {
         while (j > 0 && text[i] != pattern[j]) { 
-            j = fail[j - 1];           
+            j = fail[j];           
         }
         if (text[i] == pattern[j]) {
             if (++j == strlen(pattern)) {
