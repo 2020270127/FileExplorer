@@ -5,6 +5,35 @@
 #include "Algorithm/fileinfo.hpp"
 #include "Algorithm/search.hpp"
 using namespace std;
+int key = 0;
+string pattern = "test"; //문자열 검증을 위한 값
+
+std::string generateRandomString() {
+    std::string chars = "abcdefghijklmnopqrstuvwxyz";
+    std::string result;
+
+    // 랜덤 시드 초기화
+    static bool seedInitialized = false;
+    if (!seedInitialized) {
+        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+        seedInitialized = true;
+    }
+
+    // 문자열 길이 50으로 설정
+    while (result.length() < 50) {
+        char randomChar = chars[std::rand() % chars.length()];
+        result += randomChar;
+    }
+
+    key = std::rand() % 2;// "test"를 포함하는지 랜덤으로 결정
+    if (key == 1) { //key 가 1이면 패턴을 포함하는 
+        // "test"를 포함하는 경우, 랜덤한 위치에 삽입
+        int position = std::rand() % (result.length() - 3);
+        result.replace(position, 0, "test");
+    }
+
+    return result;
+}// 문자열 검증을 위한 랜덤 문자열 함수
 
 int main(){
     cout << "테스트 시작" << endl;
@@ -86,7 +115,21 @@ int main(){
             
     }
 
-
+    for(int i = 0; i < 50; i++){
+        string RandomString = generateRandomString();
+    if(kmp(RandomString, pattern) + key  == 1) // key가 0이면 pattern이 없는 스트링
+    {
+        cout<<"kmp has error on string " + RandomString <<endl;
+        cout<<kmp(RandomString, pattern)<<endl;
+        cout<<key<<endl;
+    }
+        
+    if((strstr(RandomString, pattern) == -1  && key == 1) || (strstr(RandomString,pattern)!=-1) && key == 0){
+        cout<<"strstr has error on string " + RandomString <<endl;
+        cout<<strstr(RandomString, pattern)<<endl;
+        cout<<key<<endl;
+        }
+    }
 
     // STRSTR, KMP 테스트
     // 찾을 임의의 패턴 정하기
