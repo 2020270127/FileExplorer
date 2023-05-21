@@ -17,8 +17,6 @@ struct FileInfo {
     std::time_t modified_time;
 };
 
-int getSize();
-
 int getSize(fs::path path);
 
 template <typename T> void printInfo(T *info_array, int size);
