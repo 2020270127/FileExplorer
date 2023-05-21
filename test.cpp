@@ -59,8 +59,11 @@ int main(){
     // head_sort check
     heap_sort(fileArray, 5, &FileInfo::modified_time, comp<int>);
     for (int i = 0; i < 4; i++) {
-        if(fileArray[i].modified_time > fileArray[i+1].modified_time)
+        if(fileArray[i].modified_time > fileArray[i+1].modified_time){
             printf("error on heap_sort(time)\n"); 
+            printInfo(&fileArray[i],1);
+            printInfo(&fileArray[i+1],1);
+        }        
     }
     heap_sort(fileArray, 5, &FileInfo::size, comp<int>);
     for (int i = 0; i < 4; i++) {
