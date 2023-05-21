@@ -128,10 +128,6 @@ void heapify(T array[], int heapsize, int i, U value, CmpFunc cmp) {
     // 왼쪽 or 오른쪽 자식 노드 중 부모 노드보다 큰 값이 존재한 경우
     if (i != parentNode) {
         swap(&array[parentNode], &array[i]);
-        // swap(&(array[parentNode].name), &(array[i].name));
-        // swap(&(array[parentNode].size), &(array[i].size));
-        // swap(&(array[parentNode].modified_time), &(array[i].modified_time));
-
         // 초기 부모노드가 제자리를 찾을 때까지 내려갑니다.
         heapify(array, heapsize, parentNode, value, cmp);
     }
