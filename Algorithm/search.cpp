@@ -119,7 +119,7 @@ bool kmp(string text, string pattern) {
     j = 0;
     for (int i = 0; i < text.length(); i++) {
         while (j > 0 && text[i] != pattern[j]) { 
-            j = fail[j - 1];           
+            j = fail[j];           
         }
         if (text[i] == pattern[j]) {
             if (++j == pattern.length()) {
