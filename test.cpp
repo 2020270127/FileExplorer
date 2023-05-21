@@ -3,6 +3,7 @@
 #include <ctime>
 #include "Algorithm/sort.hpp"
 #include "Algorithm/fileinfo.hpp"
+#include "Algorithm/search.hpp"
 using namespace std;
 
 int main(){
@@ -95,6 +96,16 @@ int main(){
 
     //DFS, BFS 검사
     // 최소 3단계 깊이의 폴더 구조 생성
+    fs::path p = fs::current_path().string() + "\\..\\Algorithm\\test";
+    cout << "DFS test" << endl;
+    cout << p.string() << " path search" << endl;
+    dfs(p, "df",KMP); //working
+    
+
+    cout << "BFS test" << endl;
+    cout << p.string() << " path search" << endl;
+    bfs(p, "hi", STRSTR); 
+
     // 깊이에 따라서 파일명 다르게 생성
     // DFS, BFS가 어떤 순서로 파일명을 출력하는지 검사
 }
