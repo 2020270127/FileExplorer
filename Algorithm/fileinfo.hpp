@@ -17,8 +17,6 @@ struct FileInfo {
     std::time_t modified_time;
 };
 
-
-
 int getSize();
 
 int getSize(fs::path path);
@@ -31,6 +29,8 @@ int printSearchedInDir(fs::path const &dirpath, std::string pattern, int method)
 
 FileInfo *getInfoArray();
 FileInfo *getInfo(fs::path filepath);
+
+void searchFile(const fs::path& p, const std::string& target, int method, int algorithm);
 
 template <typename T> void printInfo(T *info_array, int size) {
     const int fieldWidth = 27;
@@ -50,4 +50,3 @@ template <typename T> void printInfo(T *info_array, int size) {
         std::cout << oss.str() << std::endl << std::endl;
     }
 }
-void searchFile(const fs::path& p, const std::string& target, int method, int algorithm);
