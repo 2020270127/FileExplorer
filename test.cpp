@@ -5,9 +5,6 @@
 #include "Algorithm/fileinfo.hpp"
 using namespace std;
 
-std::tm timeStruct{};
-
-
 int main(){
     cout << "테스트 시작" << endl;
     //Sort 테스트
