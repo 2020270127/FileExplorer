@@ -156,7 +156,9 @@ int main(int argc, char *argv[]) {
         char method = sortArgs[0][0];
         char algorithm = sortArgs[1][0];
       
-        printSortedArr(method,algorithm);
+        if(printSortedArr(method,algorithm) == -1){
+            cout<<"wrong argument"<<endl;
+        }
         //sort
     }
     
