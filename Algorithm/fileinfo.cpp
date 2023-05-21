@@ -41,15 +41,7 @@ void printInfo(FileInfo *info_array, int size) {
     delete[] info_array; // 할당 해제
 }
 
-int getSize() {
-    int file_count = 0;
-    for (auto &entry : fs::directory_iterator(fs::current_path())) {
-        if (entry.is_regular_file() || entry.is_directory()) {
-            file_count++;
-        }
-    }
-    return file_count;
-}
+
 
 int getSize(fs::path path) {
     int file_count = 0;
@@ -62,7 +54,7 @@ int getSize(fs::path path) {
 }
 
 FileInfo *getInfoArray() {
-    int file_count = getSize();
+    int file_count = getSize(fs::current_path());
 
     FileInfo *info_array = new FileInfo[file_count];
     int i = 0;
@@ -106,15 +98,11 @@ FileInfo *getInfo(fs::path filepath) {
     return info;
 }
 
-// FileInfo* sortInfo(char standard, char method){
-//     FileInfo* arr = getInfoArray();
-//     int size = getSize();
 
-// }
 
 int printSortedArr(char method, char standard) {
     FileInfo *arr = getInfoArray();
-    int size = getSize();
+    int size = getSize(fs::current_path());
 
     switch (method) {
     case 'q':
