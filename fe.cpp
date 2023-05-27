@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     program.add_argument("-mv").help("USAGE : -mv [WHAT to move] [WHERE to move]").nargs(2); //이동
     program.add_argument("-sort").help("USAGE : -sort [q for quick, m for merge, h for heap] [n for name, s for size, t for time]").nargs(2); //정렬
     program.add_argument("-ss").help("USAGE : -ss [dfs or bfs] [kmp or strstr] [what to search]").nargs(3);
-    program.add_argument("-path").help("where to search").nargs(1); //검색
+    program.add_argument("-path").help("where to search (only for '-ss')").nargs(1); //검색
 
    
   try {
