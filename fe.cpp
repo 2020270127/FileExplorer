@@ -12,14 +12,14 @@ int main(int argc, char *argv[]) {
     argparse::ArgumentParser program("FileExplorer");
 
     // Args list
-    program.add_argument("-dir").default_value("./").help("target dir").nargs(0);
-    program.add_argument("-mkdir").help("make dir"); //폴더 생성
-    program.add_argument("-rm").help("remove file or dir"); //파일 혹은 폴더 삭제 
-    program.add_argument("-touch").help("touch"); //파일 생성
-    program.add_argument("-cp").help("copy src to dst").nargs(2); //파일 혹은 폴더 복사
-    program.add_argument("-mv").help("move and").nargs(2); //이동
-    program.add_argument("-sort").help("sort list [algorithm]").nargs(2); //정렬
-    program.add_argument("-ss").help("search by substring").nargs(3);
+    program.add_argument("-dir").default_value("./").help("print current location").nargs(0);
+    program.add_argument("-mkdir").help("USAGE : -mkdir [FOLDERNAME to create]"); //폴더 생성
+    program.add_argument("-rm").help("USAGE : -rm [WHAT to remove]"); //파일 혹은 폴더 삭제 
+    program.add_argument("-touch").help("USAGE : -touch [FILENAME to create]"); //파일 생성
+    program.add_argument("-cp").help("USAGE : -cp [WHAT to copy] [WHERE to copy]").nargs(2); //파일 혹은 폴더 복사
+    program.add_argument("-mv").help("USAGE : -mv [WHAT to move] [WHERE to move]").nargs(2); //이동
+    program.add_argument("-sort").help("USAGE : -sort [q for quick, m for merge, h for heap] [n for name, s for size, t for time]").nargs(2); //정렬
+    program.add_argument("-ss").help("USAGE : -ss [dfs or bfs] [kmp or strstr] [what to search]").nargs(3);
     program.add_argument("-path").help("where to search").nargs(1); //검색
 
    
