@@ -1,22 +1,34 @@
 #include "search.hpp"
 #include "sort.hpp"
-#include <ctime>
-#include <filesystem>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <cstring>
-#include <stdlib.h>
-#include <sys/stat.h>
 
+#ifndef __CTIME__
+#include <ctime>
+#endif
+
+#ifndef __FILESYSTEM__
+#include <filesystem>
+#endif
+
+#ifndef __IOSTREAM__
+#include <iostream>
+#endif
+
+#ifndef __SYS_STAT_H__
+#include <sys/stat.h>
+#endif
+
+#ifndef DFS
 #define DFS 0
+#endif
+
+#ifndef BFS
 #define BFS 1
+#endif
 
 namespace fs = std::filesystem;
 
 struct FileInfo {
     std::string name;
-    // std::string path;
     uintmax_t size;
     bool is_directory;
     std::time_t modified_time;
@@ -27,8 +39,7 @@ void printInfo(FileInfo *info_array, int size) {
 
     for (int i = 0; i < size; i++) {
         std::ostringstream oss;
-        // memcpy(&info_array[i].modified_time, nullptr, sizeof(info_array[i].modified_time));
-
+      
         oss << "Name: " << std::left << std::setw(fieldWidth)
             << info_array[i].name << "Size: " << std::left
             << std::setw(fieldWidth) << info_array[i].size
@@ -49,8 +60,7 @@ void printAInfo(FileInfo *info_array) {
 
 
     std::ostringstream oss;
-    // memcpy(&info_array[i].modified_time, nullptr, sizeof(info_array[i].modified_time));
-
+    
     oss << "Name: " << std::left << std::setw(fieldWidth)
         << info_array->name << "Size: " << std::left
         << std::setw(fieldWidth) << info_array->size
@@ -88,11 +98,7 @@ FileInfo *getInfoArray() {
         if (entry.is_regular_file() || entry.is_directory()) {
             struct stat st;
             info_array[i].name = entry.path().filename().string();
-            // info_array[i].path = entry.path().string();
             info_array[i].size = entry.is_directory() ? 0 : entry.file_size();
-            // if (stat(&(info_array[i].name)[0], &st) != 0) {
-            //     std::cout << "Failed to get file status" << std::endl;
-            // }
             info_array[i].modified_time = st.st_mtime;
             info_array[i].is_directory = entry.is_directory();
             i++;
@@ -104,19 +110,14 @@ FileInfo *getInfoArray() {
 FileInfo *getInfo(fs::path filepath) {
 
     
-    FileInfo *info = new FileInfo; // memory leak
+    FileInfo *info = new FileInfo; 
     fs::directory_entry entry = fs::directory_entry(filepath);
 
     if (entry.is_regular_file() || entry.is_directory()) {
         struct stat st;
       
-        info->name = entry.path().filename().string(); //memory leak!
-        
-        // info_array[i].path = entry.path().string();
+        info->name = entry.path().filename().string(); 
         info->size = entry.is_directory() ? 0 : entry.file_size();
-        // if (stat(&(info->name)[0], &st) != 0) {
-        //     std::cout << "Failed to get file status" << std::endl;
-        // }
         info->modified_time = st.st_mtime;
         info->is_directory = entry.is_directory();
     }
@@ -144,8 +145,7 @@ int printSortedArr(char method, char standard) {
         case 'n':
             quick_sort(arr, 0, size - 1, &FileInfo::name, comp<string>);
             break;
-            // case 'p' : quick_sort(arr, 0, size-1,&FileInfo::path
-            // ,comp<string>);
+
         default:
             return -1;
         }
@@ -162,8 +162,7 @@ int printSortedArr(char method, char standard) {
         case 'n':
             merge_sort(arr, 0, size - 1, &FileInfo::name, comp<string>);
             break;
-            // case 'p' : merge_sort(arr, 0, size-1,&FileInfo::path
-            // ,comp<string>);
+
         default:
             return -1;
         }
@@ -180,7 +179,6 @@ int printSortedArr(char method, char standard) {
         case 'n':
             heap_sort(arr, size, &FileInfo::name, comp<string>);
             break;
-            // case 'p' : heap_sort(arr, size, &FileInfo::path ,comp<string>);
         default:
             return -1;
         }
@@ -198,7 +196,7 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
             continue; // 디렉토리는 skip
         switch(method){
             case KMP:
-                if (kmp(entry.path().filename().string(), pattern) != -1)
+                if (kmp(entry.path().filename().string(), pattern))
                     printInfo(getInfo(entry.path()), 1);
             break;
             case STRSTR:
@@ -210,7 +208,6 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
                 return -1;
             break;
         }   
-        // std::cout << entry.path().filename().string() << std::endl; // 파일명 출력
     }
     return 0;
 }
@@ -228,7 +225,3 @@ void searchFile(const fs::path& p, const std::string& target, int method, int al
     }
 }
 
-// int main() { // test code
-//     string path = "./";
-//     printSearchedInDir(path, "li", KMP);
-// }

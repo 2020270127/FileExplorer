@@ -1,14 +1,29 @@
 #pragma once
+
+#ifndef __FILESYSTEM__
 #include <filesystem>
+#endif
+
+#ifndef __IOSTREAM__
 #include <iostream>
-#include <string>
+#endif
+
+#ifndef __SYS_STAT_H__
 #include <sys/stat.h>
+#endif
+
 #ifdef __APPLE__
 #include <sstream>
 #endif
 
+
+#ifndef KMP
 #define KMP 0
+#endif
+
+#ifndef STRSTR
 #define STRSTR 1
+#endif
 
 namespace fs = std::filesystem;
 struct FileInfo {

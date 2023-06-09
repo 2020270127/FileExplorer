@@ -1,11 +1,18 @@
 #include "include/argparse.hpp"
 #include "Algorithm/fileinfo.hpp"
-#include <stdio.h>
-#include <stdlib.h>
-#include <fstream>
-#include <filesystem>
 
-#define BUF_SIZE 4096
+#ifndef __STDLIB_H__
+#include <stdlib.h>
+#endif
+
+#ifndef __FSTREAM__
+#include <fstream>
+#endif
+
+#ifndef __FILESYSTEM__
+#include <filesystem>
+#endif
+
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -177,10 +184,6 @@ int main(int argc, char *argv[]) {
             searchFile(path, pattern, method, algorithm);
         else    
             cout<<"wrong argument"<<endl;
-
-        //method >> kmp or strstr , algorithm >> dfs or bfs
-        //./fe -ss KMP DFS "df"  
-        //ss
     }
 
     exit(0);

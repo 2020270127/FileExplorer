@@ -1,10 +1,21 @@
 #pragma once
-#pragma once
-#include <string>
-#include <filesystem>
 
+#ifndef __STRING__
+#include <string>
+#endif
+
+#ifndef __FILESYSTEM__
+#include <filesystem>
+#endif
+
+
+#ifndef KMP
 #define KMP 0
+#endif
+
+#ifndef STRSTR
 #define STRSTR 1
+#endif
 
 namespace fs = std::filesystem;
 

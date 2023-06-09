@@ -1,26 +1,12 @@
+#ifndef __IOSTERAM__
 #include <iostream>
+#endif
+
+#ifndef __STRING__
 #include <string>
+#endif
 
 using namespace std;
-
-// int strcmp(string a, string b) {
-//     int alen = a.length();
-//     int blen = b.length();
-//     int min_strlen = min(alen, blen);
-//     for (int i = 0; i < min_strlen; i++) { // 더 작은 문자열 길이 만큼 비교
-//         if (a.at(i) > b.at(i))
-//             return 1;
-//         else if (a.at(i) < b.at(i))
-//             return 0;
-//     }
-//     // 문자열 모두 같은 경우 짧은게 우선
-//     if (alen > blen)
-//         return 1;
-//     else if (alen < blen)
-//         return 0;
-//     else
-//         return -1; // 같은 문자열인 경우 다른 속성 비교
-// }
 
 template <typename T> void swap(T *a, T *b) {
     T tmp = *a;
@@ -150,25 +136,3 @@ void heap_sort(T *arr, int size, U value, CmpFunc cmp) {
     }
     return;
 }
-
-// int main() { // 테스트용
-//     int arr[] = {5, 3, 4, 2, 1, 0, 67, 987, 3, 5};
-//     string astr[] = {"hello", "hi", "hiru", "hired", "apple", "banana"};
-//     for (auto i : arr) {
-//         cout << i << " ";
-//     }
-//     cout << "\n";
-//     quick_sort(arr, 0, 9, comp<int>);
-//     for (auto i : arr) {
-//         cout << i << " ";
-//     }
-//     cout << "\n";
-//     for (auto i : astr) {
-//         cout << i << " ";
-//     }
-//     cout << "\n";
-//     merge_sort(astr,0,5, comp<string>);
-//     for (auto i : astr) {
-//         cout << i << " ";
-//     }
-// }

@@ -1,12 +1,34 @@
+#ifndef __CSTRING__
 #include <cstring>
+#endif
+
+#ifndef __FILESYSTEM__
 #include <filesystem>
+#endif
+
+#ifndef __IOSTREAM__
 #include <iostream>
-#include <stdio.h>
+#endif
+
+#ifndef __STRING__
 #include <string>
+#endif
+
+#ifndef __QUEUE__
 #include <queue>
+#endif
+
+#ifndef __UNORDERED_SET__
 #include <unordered_set>
+#endif
+
+#ifndef __VECTOR__
 #include <vector>
+#endif
+
+#ifndef __FILEINFO_HPP__
 #include "fileinfo.hpp"
+#endif
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -221,9 +243,3 @@ void bfs(const fs::path& p, const std::string& target, int method) {
 
 
 
-// int main(){
-// 	//dfs("df",KMP); //working
-//     fs::path p = "C:\\Users\\BISB\\OneDrive\\Univ\\23-1\\DataStructure\\DataStructure-FileExplorer\\Algorithm\\test";
-//     bfs(p, "hi",STRSTR); 
-// 	return 0;
-// }
