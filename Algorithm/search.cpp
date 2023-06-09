@@ -40,7 +40,7 @@ using namespace std;
 
 int strstr(string str, string key){
     int keyptr = 0;
-    while (keyptr + key.length() < str.length()) {
+    while (keyptr + key.length() <= str.length()) {
         int same = 1;
         for (int i = 0; i < key.length(); i++) {
             if (str[keyptr + i] != key[i]) {
@@ -61,7 +61,7 @@ int strstr(string str, string key){
 int strstr(char str[], char key[]) {
     // str에서 key 패턴을 탐색함. 슬라이딩 윈도우 알고리즘 이용
     int keyptr = 0;
-    while (keyptr + strlen(key) < strlen(str)) {
+    while (keyptr + strlen(key) <= strlen(str)) {
         int same = 1;
         for (int i = 0; i < strlen(key); i++) {
             if (str[keyptr + i] != key[i]) {
