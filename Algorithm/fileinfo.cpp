@@ -5,6 +5,8 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <cstring>
+#include <stdlib.h>
 #include <sys/stat.h>
 
 #define DFS 0
@@ -25,6 +27,7 @@ void printInfo(FileInfo *info_array, int size) {
 
     for (int i = 0; i < size; i++) {
         std::ostringstream oss;
+        // memcpy(&info_array[i].modified_time, nullptr, sizeof(info_array[i].modified_time));
 
         oss << "Name: " << std::left << std::setw(fieldWidth)
             << info_array[i].name << "Size: " << std::left
@@ -37,8 +40,30 @@ void printInfo(FileInfo *info_array, int size) {
 
         std::cout << oss.str() << std::endl << std::endl;
     }
-    for(int i = 0 ;i < size; i++){}
-    delete[] info_array; // 할당 해제
+   
+    delete[] info_array;
+}
+
+void printAInfo(FileInfo *info_array) {
+    const int fieldWidth = 27;
+
+
+    std::ostringstream oss;
+    // memcpy(&info_array[i].modified_time, nullptr, sizeof(info_array[i].modified_time));
+
+    oss << "Name: " << std::left << std::setw(fieldWidth)
+        << info_array->name << "Size: " << std::left
+        << std::setw(fieldWidth) << info_array->size
+        << "Modified time: " << std::left
+        << std::put_time(std::localtime(&(info_array->modified_time)),
+                            "%c")
+        << "         Type: " << std::left << std::setw(fieldWidth)
+        << (info_array->is_directory ? "directory" : "file");
+
+    std::cout << oss.str() << std::endl << std::endl;
+
+   
+    delete info_array;
 }
 
 
@@ -78,13 +103,15 @@ FileInfo *getInfoArray() {
 
 FileInfo *getInfo(fs::path filepath) {
 
-    FileInfo *info = new FileInfo[1];
-    int i = 0;
+    
+    FileInfo *info = new FileInfo; // memory leak
     fs::directory_entry entry = fs::directory_entry(filepath);
 
     if (entry.is_regular_file() || entry.is_directory()) {
         struct stat st;
-        info->name = entry.path().filename().string();
+      
+        info->name = entry.path().filename().string(); //memory leak!
+        
         // info_array[i].path = entry.path().string();
         info->size = entry.is_directory() ? 0 : entry.file_size();
         // if (stat(&(info->name)[0], &st) != 0) {
@@ -92,11 +119,12 @@ FileInfo *getInfo(fs::path filepath) {
         // }
         info->modified_time = st.st_mtime;
         info->is_directory = entry.is_directory();
-        i++;
     }
 
     return info;
 }
+
+
 
 
 
@@ -170,7 +198,7 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
             continue; // 디렉토리는 skip
         switch(method){
             case KMP:
-                if (kmp(entry.path().filename().string(), pattern))
+                if (kmp(entry.path().filename().string(), pattern) != -1)
                     printInfo(getInfo(entry.path()), 1);
             break;
             case STRSTR:

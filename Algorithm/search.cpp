@@ -135,13 +135,13 @@ void drecursive_k(const fs::path& p, const std::string& target) {
     for (const auto& entry : fs::directory_iterator(p)) {
         if (entry.is_directory()) {
             if (kmp(entry.path().filename().string(), target)) {
-                printInfo(getInfo(entry.path()), 1);
+                printAInfo(getInfo(entry.path()));
             } else {
                 drecursive_k(entry.path(), target);
             }
         } else{
             if (kmp(entry.path().filename().string(), target)) {
-                printInfo(getInfo(entry.path()), 1);
+                printAInfo(getInfo(entry.path()));
             } 
         }
     }
@@ -151,13 +151,13 @@ void drecursive_s(const fs::path& p, const std::string& target) {
     for (const auto& entry : fs::directory_iterator(p)) {
         if (entry.is_directory()) {
             if (strstr(entry.path().filename().string(), target) != -1) {
-                printInfo(getInfo(entry.path()), 1);
+                printAInfo(getInfo(entry.path()));
             } else {
                 drecursive_s(entry.path(), target);
             }
         } else {
              if (strstr(entry.path().filename().string(), target) != -1) {
-                printInfo(getInfo(entry.path()), 1);
+                printAInfo(getInfo(entry.path()));
             }
         }
     }
@@ -195,12 +195,12 @@ void bfs(const fs::path& p, const std::string& target, int method) {
 		switch(method){
         case KMP:
             if (kmp(i->path().filename().string(), target)){
-                printInfo(getInfo(i->path()), 1);
+                printAInfo(getInfo(i->path())); // memory leak!
             }
             break;
         case STRSTR:
             if (strstr(i->path().filename().string(), target) != -1){
-                printInfo(getInfo(i->path()), 1);
+                printAInfo(getInfo(i->path()));
             }
             break;
         }   
@@ -214,7 +214,7 @@ void bfs(const fs::path& p, const std::string& target, int method) {
 	else if(!que.empty()){
 		string nextDir = que.front();
 		que.pop();
-		bfs(nextDir, target, method); // 큐 순서대로 큐 빌때까지 반복
+		if(fs::exists(nextDir))  (nextDir, target, method); // 큐 순서대로 큐 빌때까지 반복 //memory leaked
 	}
 }
 

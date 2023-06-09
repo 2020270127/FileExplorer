@@ -166,12 +166,18 @@ int main(int argc, char *argv[]) {
         auto sortArgs = program.get<std::vector<std::string>>("-ss");
         auto Path = program.get<std::vector<std::string>>("-path");
 
-        int method = sortArgs[0] == "DFS" ? 0:1;
-        int algorithm = sortArgs[1] == "KMP" ? 0:1;
+        int method = (sortArgs[0] == "DFS") || (sortArgs[0] == "dfs") ? 0 : (sortArgs[0] == "BFS") || (sortArgs[0] == "bfs") ? 1 : -1;
+        int algorithm = (sortArgs[1] == "KMP") || (sortArgs[1] == "kmp") ? 0 : (sortArgs[1] == "STRSTR") || (sortArgs[1] == "strstr") ? 1 : -1;
+        // cout<<method<<endl;
+        // cout<<algorithm<<endl;
         std::string pattern = sortArgs[2];
         std::string path = Path.empty() ? std::filesystem::current_path().string() : Path[0];
 
-        searchFile(path, pattern, method, algorithm);
+        if(method != -1 && algorithm != -1) 
+            searchFile(path, pattern, method, algorithm);
+        else    
+            cout<<"wrong argument"<<endl;
+
         //method >> kmp or strstr , algorithm >> dfs or bfs
         //./fe -ss KMP DFS "df"  
         //ss
