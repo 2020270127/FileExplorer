@@ -227,7 +227,7 @@ void searchFile(const fs::path& p, const std::string& target, int method, int al
             dfs(p, target,algorithm);
         break;
         default:
-            cout<<"Wrong search algoritm"<<endl;
+            cout<<"Wrong search method"<<endl;
     }
 }
 
