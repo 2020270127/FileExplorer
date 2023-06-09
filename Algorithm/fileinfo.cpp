@@ -221,10 +221,10 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
 void searchFile(const fs::path& p, const std::string& target, int method, int algorithm){
     switch(algorithm){
         case BFS:
-            bfs(p, target,method);
+            bfs(p, target,algorithm);
             break;
         case DFS:
-            dfs(p, target,method);
+            dfs(p, target,algorithm);
         break;
         default:
             cout<<"Wrong search algoritm"<<endl;
