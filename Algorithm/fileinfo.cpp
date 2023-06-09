@@ -219,7 +219,7 @@ int printSearchedInDir(fs::path const &dirpath, string pattern, int method) {
 }
 
 void searchFile(const fs::path& p, const std::string& target, int method, int algorithm){
-    switch(algorithm){
+    switch(method){
         case BFS:
             bfs(p, target,algorithm);
             break;
