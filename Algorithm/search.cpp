@@ -165,11 +165,10 @@ void drecursive_k(const fs::path& p, const std::string& target) {
 void drecursive_s(const fs::path& p, const std::string& target) {
     for (const auto& entry : fs::directory_iterator(p)) {
         if (entry.is_directory()) {
-            if (strstr(entry.path().filename().string(), target) != -1) {
+            if (strstr(entry.path().filename().string(), target) != -1) 
                 printAInfo(getInfo(entry.path()));
-            } else {
-                drecursive_s(entry.path(), target);
-            }
+            drecursive_s(entry.path(), target);
+            
         } else {
              if (strstr(entry.path().filename().string(), target) != -1) {
                 printAInfo(getInfo(entry.path()));
