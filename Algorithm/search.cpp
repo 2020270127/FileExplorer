@@ -78,11 +78,6 @@ int strstr(char str[], char key[]) {
 }
 
 
-// 테스트용 구조체 정의
-typedef struct Fileinfo{
-    char name[MAX_STRING_LENGTH + 1];  // 파일 이름
-    int size;                          // 파일 크기
-}Fileinfo;
 
 // KMP 알고리즘 함수
 bool kmp(char text[], char pattern[]) {

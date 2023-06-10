@@ -12,6 +12,7 @@
 #ifndef __IOSTREAM__
 #include <iostream>
 #endif
+#include <sstream>
 
 #ifndef __SYS_STAT_H__
 #include <sys/stat.h>
@@ -32,6 +33,7 @@ struct FileInfo {
     uintmax_t size;
     bool is_directory;
     std::time_t modified_time;
+    struct stat st;
 };
 
 void printInfo(FileInfo *info_array, int size) {
@@ -96,13 +98,12 @@ FileInfo *getInfoArray() {
 
     for (auto &entry : fs::directory_iterator(fs::current_path())) {
         if (entry.is_regular_file() || entry.is_directory()) {
-            struct stat st;
             info_array[i].name = entry.path().filename().string();
             info_array[i].size = entry.is_directory() ? 0 : entry.file_size();
-            if(stat(&(info_array[i].name)[0],&st) != 0){
+            if(stat(entry.path().c_str(),&info_array->st) != 0){
                  std::cout << "Failed to get file status" << std::endl;
             }
-            info_array[i].modified_time = st.st_mtime;
+            info_array[i].modified_time = info_array->st.st_mtime;
             info_array[i].is_directory = entry.is_directory();
             i++;
         }
@@ -117,14 +118,14 @@ FileInfo *getInfo(fs::path filepath) {
     fs::directory_entry entry = fs::directory_entry(filepath);
 
     if (entry.is_regular_file() || entry.is_directory()) {
-        struct stat st;
+        
       
         info->name = entry.path().filename().string(); 
         info->size = entry.is_directory() ? 0 : entry.file_size();
-        if (stat(&(info->name)[0], &st) != 0) {
-                std::cout << "Failed to get file status" << std::endl;
+            if (stat(entry.path().c_str(), &(info->st)) != 0) {
+            std::cout << "Failed to get file status" << std::endl;
         }
-        info->modified_time = st.st_mtime;
+        info->modified_time = info->st.st_mtime;
         info->is_directory = entry.is_directory();
     }
 

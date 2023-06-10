@@ -31,6 +31,7 @@ struct FileInfo {
     uintmax_t size;
     bool is_directory;
     std::time_t modified_time;
+    struct stat st;
 };
 
 int getSize(fs::path path);
