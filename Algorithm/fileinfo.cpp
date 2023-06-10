@@ -33,6 +33,7 @@ namespace fs = std::filesystem;
 
 struct FileInfo {
     std::string name;
+    std::string path;
     uintmax_t size;
     bool is_directory;
     std::time_t modified_time;
@@ -40,7 +41,7 @@ struct FileInfo {
 };
 
 void printInfo(FileInfo *info_array, int size) {
-    const int fieldWidth = 27;
+    const int fieldWidth = 25;
 
     for (int i = 0; i < size; i++) {
         std::ostringstream oss;
@@ -50,10 +51,11 @@ void printInfo(FileInfo *info_array, int size) {
             << std::setw(fieldWidth) << info_array[i].size
             << "Modified time: " << std::left
             << std::put_time(std::localtime(&(info_array[i].modified_time)),
-                             "%c")
-            << "         Type: " << std::left << std::setw(fieldWidth)
-            << (info_array[i].is_directory ? "directory" : "file");
-
+                             "%c") <<std::endl
+            << "Type: " << std::left << std::setw(fieldWidth)
+            << (info_array[i].is_directory ? "directory" : "file")
+            << "Path: " << std::left << std::setw(fieldWidth)
+            << info_array[i].path;
         std::cout << oss.str() << std::endl << std::endl;
     }
    
@@ -71,9 +73,11 @@ void printAInfo(FileInfo *info_array) {
         << std::setw(fieldWidth) << info_array->size
         << "Modified time: " << std::left
         << std::put_time(std::localtime(&(info_array->modified_time)),
-                            "%c")
-        << "         Type: " << std::left << std::setw(fieldWidth)
-        << (info_array->is_directory ? "directory" : "file");
+                            "%c") <<std::endl
+        << "Type: " << std::left << std::setw(fieldWidth)
+        << (info_array->is_directory ? "directory" : "file")
+        << "Path: " << std::left << std::setw(fieldWidth)
+            << info_array->path;
 
     std::cout << oss.str() << std::endl << std::endl;
 
@@ -108,6 +112,7 @@ FileInfo *getInfoArray() {
             }
             info_array[i].modified_time = info_array->st.st_mtime;
             info_array[i].is_directory = entry.is_directory();
+            info_array[i].path = entry.path().string();
             i++;
         }
     }
@@ -121,8 +126,6 @@ FileInfo *getInfo(fs::path filepath) {
     fs::directory_entry entry = fs::directory_entry(filepath);
 
     if (entry.is_regular_file() || entry.is_directory()) {
-        
-      
         info->name = entry.path().filename().string(); 
         info->size = entry.is_directory() ? 0 : entry.file_size();
             if (stat(entry.path().c_str(), &(info->st)) != 0) {
@@ -130,6 +133,7 @@ FileInfo *getInfo(fs::path filepath) {
         }
         info->modified_time = info->st.st_mtime;
         info->is_directory = entry.is_directory();
+        info->path = entry.path().string();
     }
 
     return info;

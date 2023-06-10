@@ -160,10 +160,12 @@ int main(int argc, char *argv[]) {
 
     else if (program.is_used("-sort")) {
         auto sortArgs = program.get<std::vector<std::string>>("-sort");
-        char method = sortArgs[0][0];
-        char algorithm = sortArgs[1][0];
+        char method = sortArgs[0][0]; // q(qucick), m(merge), h(heap)
+        char algorithm = sortArgs[1][0]; //n(name), s(size), t(modified_time)
       
-        if(printSortedArr(method,algorithm) == -1){
+        if((method != 'q' && method != 'm' && method != 'h') || (algorithm != 'n'&& algorithm != 's'&& algorithm != 't'))
+            cout<<"wrong argument QWER"<<endl;
+        else if(printSortedArr(method,algorithm) == -1){
             cout<<"wrong argument"<<endl;
         }
         //sort
