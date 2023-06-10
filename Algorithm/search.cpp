@@ -151,11 +151,9 @@ bool kmp(string text, string pattern) {
 void drecursive_k(const fs::path& p, const std::string& target) {
     for (const auto& entry : fs::directory_iterator(p)) {
         if (entry.is_directory()) {
-            if (kmp(entry.path().filename().string(), target)) {
+            if (kmp(entry.path().filename().string(), target))
                 printAInfo(getInfo(entry.path()));
-            } else {
-                drecursive_k(entry.path(), target);
-            }
+            drecursive_k(entry.path(), target);
         } else{
             if (kmp(entry.path().filename().string(), target)) {
                 printAInfo(getInfo(entry.path()));
