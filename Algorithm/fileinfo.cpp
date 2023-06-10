@@ -12,7 +12,10 @@
 #ifndef __IOSTREAM__
 #include <iostream>
 #endif
+
+#ifndef __SSTREAM__
 #include <sstream>
+#endif
 
 #ifndef __SYS_STAT_H__
 #include <sys/stat.h>
