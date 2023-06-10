@@ -178,7 +178,6 @@ void drecursive_s(const fs::path& p, const std::string& target) {
 }
 
 void dfs(const fs::path& p, const std::string& target, int method) {
-    std::vector<std::string> dic;
     switch(method){
         case KMP:
             drecursive_k(p,target);
@@ -189,10 +188,6 @@ void dfs(const fs::path& p, const std::string& target, int method) {
         default:
             cout << "dfs method error" << endl;
             return;
-    }
-    
-    for (const auto& folder : dic) {
-        std::cout << folder << std::endl;
     }
 }
 queue<fs::path> que;// 큐는 항상 유지
