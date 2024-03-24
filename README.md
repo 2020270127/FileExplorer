@@ -1,5 +1,6 @@
 # DataStructure-FileExplorer
 ## Description
+2023 summer data-structure team project
 FileExplorer Team6
  - 배준범, 이창민, 이동규, 김건희
 
